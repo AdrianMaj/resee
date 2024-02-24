@@ -2,13 +2,19 @@
 
 .navbar {
 	width: 100%;
-	position: sticky;
+	position: fixed;
+	height: 76px;
+	display: flex;
+	align-items: center;
 	top: 0;
 	background-color: #fff;
 	padding: 2em;
+	z-index: 1000;
 }
 .navbarContainer {
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	height: auto;
 	width: 100%;
 }
@@ -19,32 +25,10 @@
 	max-width: 50%;
 	text-decoration: none;
 }
-.menuLinks {
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-	gap: 2.5em;
-}
-.menuLink {
-	font-size: $paragraphSize;
-	text-wrap: nowrap;
-	text-decoration: none;
-	color: $textColor;
-}
-.menuLine {
-	height: 75%;
-	align-self: center;
-	width: 2px;
-	margin: 0 0.5em;
-	background-color: $primaryLight;
-}
-.loginLink {
-	font-weight: 600;
-	color: $primary;
-}
 
 @media (min-width: 992px) {
 	.navbar {
 		padding: 2em 3em;
+		height: 100px;
 	}
 }

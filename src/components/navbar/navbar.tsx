@@ -1,12 +1,28 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Wrapper from '../ui/wrapper'
 import Image from 'next/image'
 import classes from './navbar.module.scss'
 import Link from 'next/link'
-import LinkButton from '../ui/linkButton'
-import MotionLink from '../ui/motionLink'
+import BurgerButton from './burgerButton'
+import { useMediaQuery } from 'react-responsive'
+import Menu from './menu'
+import { AnimatePresence } from 'framer-motion'
 
 const Navbar = () => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const toggleMenu = () => {
+		setIsMenuOpen(prevState => !prevState)
+	}
+	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
+	useEffect(() => {
+		if (!isMobile) {
+			setIsMenuOpen(true)
+		}
+		if (isMobile) {
+			setIsMenuOpen(false)
+		}
+	}, [isMobile])
 	return (
 		<nav className={classes.navbar}>
 			<Wrapper>
@@ -21,22 +37,8 @@ const Navbar = () => {
 							alt="resee Logo"
 						/>
 					</Link>
-					<div className={classes.menuLinks}>
-						<MotionLink whileHover={{ color: '#7527f1' }} className={`${classes.menuLink}`} href="/resume-templates">
-							Resume Templates
-						</MotionLink>
-						<MotionLink whileHover={{ color: '#7527f1' }} className={`${classes.menuLink}`} href="/resume-editor">
-							Resume Editor
-						</MotionLink>
-						<div className={classes.menuLine}></div>
-						<MotionLink
-							whileHover={{ color: '#7527f1' }}
-							className={`${classes.menuLink} ${classes.loginLink}`}
-							href="/login">
-							Log in
-						</MotionLink>
-						<LinkButton href="/sign-up">Sign up</LinkButton>
-					</div>
+					<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+					<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
 				</div>
 			</Wrapper>
 		</nav>
