@@ -3,6 +3,8 @@ import Wrapper from '../ui/wrapper'
 import Image from 'next/image'
 import classes from './navbar.module.scss'
 import Link from 'next/link'
+import LinkButton from '../ui/linkButton'
+import MotionLink from '../ui/motionLink'
 
 const Navbar = () => {
 	return (
@@ -20,19 +22,20 @@ const Navbar = () => {
 						/>
 					</Link>
 					<div className={classes.menuLinks}>
-						<Link className={`${classes.menuLink}`} href="/resume-templates">
+						<MotionLink whileHover={{ color: '#7527f1' }} className={`${classes.menuLink}`} href="/resume-templates">
 							Resume Templates
-						</Link>
-						<Link className={`${classes.menuLink}`} href="/resume-editor">
+						</MotionLink>
+						<MotionLink whileHover={{ color: '#7527f1' }} className={`${classes.menuLink}`} href="/resume-editor">
 							Resume Editor
-						</Link>
+						</MotionLink>
 						<div className={classes.menuLine}></div>
-						<Link className={`${classes.menuLink}`} href="/login">
+						<MotionLink
+							whileHover={{ color: '#7527f1' }}
+							className={`${classes.menuLink} ${classes.loginLink}`}
+							href="/login">
 							Log in
-						</Link>
-						<Link className={`${classes.menuLink}`} href="/sign-up">
-							Sign up
-						</Link>
+						</MotionLink>
+						<LinkButton href="/sign-up">Sign up</LinkButton>
 					</div>
 				</div>
 			</Wrapper>

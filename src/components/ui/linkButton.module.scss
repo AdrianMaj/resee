@@ -1,0 +1,12 @@
+@use '../variables.scss' as *;
+
+.linkButton {
+	text-decoration: none;
+	padding: 0.75em 1.125em;
+	font-size: $paragraphSize;
+	background-color: $primary;
+	color: $background;
+	text-wrap: nowrap;
+	border-radius: $borderRadius;
+	font-weight: 600;
+}
