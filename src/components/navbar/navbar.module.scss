@@ -1,0 +1,44 @@
+@use '../variables.scss' as *;
+
+.navbar {
+	width: 100%;
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+	padding: 2em;
+}
+.navbarContainer {
+	display: flex;
+	height: auto;
+	width: 100%;
+}
+.logo {
+	display: flex;
+	align-items: center;
+	width: 18em;
+	max-width: 50%;
+	text-decoration: none;
+}
+.menuLinks {
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	gap: 1.5em;
+}
+.menuLink {
+	font-size: 2rem;
+	text-decoration: none;
+	color: $textColor;
+}
+.menuLine {
+	height: 100%;
+	width: 2px;
+	margin: 0 1em;
+	background-color: $primaryLight;
+}
+
+@media (min-width: 992px) {
+	.navbar {
+		padding: 2em 3em;
+	}
+}
