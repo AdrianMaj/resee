@@ -38,8 +38,10 @@
 }
 .cupParagraph {
 	color: black;
+	font-size: $paragraphBigSize;
 }
 .cupSpan {
+	font-size: $paragraphBigSize;
 	color: $primary;
 	font-weight: bold;
 }

@@ -13,8 +13,10 @@ const InfoSectionCard = ({ src, number, text }: { src: string; number: string; t
 				style={{ height: 'auto' }}
 				className={classes.cardImg}
 			/>
-			<p className={classes.cardNumber}>0{number}</p>
-			<p className={classes.cardText}>{text}</p>
+			<div className={classes.cardTextContainer}>
+				<p className={classes.cardNumber}>0{number}</p>
+				<p className={classes.cardText}>{text}</p>
+			</div>
 		</div>
 	)
 }
