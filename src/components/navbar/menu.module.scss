@@ -12,6 +12,7 @@
 	margin-left: auto;
 	transform-origin: top;
 	gap: 2.5em;
+	box-shadow: 0 4px 25px -25px rgb(0, 0, 0);
 }
 .menuLink {
 	font-size: $paragraphSize;
@@ -47,6 +48,7 @@
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: center;
+		box-shadow: none;
 	}
 	.loginContainer {
 		width: auto;

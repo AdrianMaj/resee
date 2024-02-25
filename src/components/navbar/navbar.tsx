@@ -7,14 +7,26 @@ import Link from 'next/link'
 import BurgerButton from './burgerButton'
 import { useMediaQuery } from 'react-responsive'
 import Menu from './menu'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const [isScrollingDown, setIsScrollingDown] = useState(false)
 	const toggleMenu = () => {
 		setIsMenuOpen(prevState => !prevState)
 	}
 	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
+	const { scrollY } = useScroll()
+	useMotionValueEvent(scrollY, 'change', latest => {
+		const previousScroll = scrollY.getPrevious()
+		console.log(previousScroll)
+		if (previousScroll && latest > previousScroll) {
+			setIsScrollingDown(true)
+		} else {
+			setIsScrollingDown(false)
+		}
+	})
+
 	useEffect(() => {
 		if (!isMobile) {
 			setIsMenuOpen(true)
@@ -23,25 +35,33 @@ const Navbar = () => {
 			setIsMenuOpen(false)
 		}
 	}, [isMobile])
+
 	return (
-		<nav className={classes.navbar}>
-			<Wrapper>
-				<div className={classes.navbarContainer}>
-					<Link className={classes.logo} href="/">
-						<Image
-							src="/reseeLogo.svg"
-							width={0}
-							height={0}
-							sizes="100vw"
-							style={{ width: '100%', height: 'auto' }}
-							alt="resee Logo"
-						/>
-					</Link>
-					<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-					<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
-				</div>
-			</Wrapper>
-		</nav>
+		<>
+			<div className={classes.navbarOffset}></div>
+			<motion.nav
+				animate={{
+					top: isScrollingDown ? '-100%' : '0%',
+				}}
+				className={classes.navbar}>
+				<Wrapper>
+					<div className={classes.navbarContainer}>
+						<Link className={classes.logo} href="/">
+							<Image
+								src="/reseeLogo.svg"
+								width={0}
+								height={0}
+								sizes="100vw"
+								style={{ width: '100%', height: 'auto' }}
+								alt="resee Logo"
+							/>
+						</Link>
+						<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+						<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
+					</div>
+				</Wrapper>
+			</motion.nav>
+		</>
 	)
 }
 
