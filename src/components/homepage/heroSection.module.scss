@@ -5,7 +5,7 @@
 	max-width: 400px;
 }
 .headingH1 {
-	font-size: clamp(2.8rem, 2.4735rem + 1.6327vw, 3.8rem);
+	font-size: $headingH1Size;
 	font-weight: 600;
 	text-align: center;
 }
