@@ -42,6 +42,10 @@ const Navbar = () => {
 			<motion.nav
 				animate={{
 					top: isScrollingDown ? '-100%' : '0%',
+					boxShadow: isMenuOpen && isMobile ? 'none' : '0 4px 25px -25px rgb(0, 0, 0)',
+				}}
+				initial={{
+					boxShadow: '0 4px 25px -25px rgb(0, 0, 0)',
 				}}
 				className={classes.navbar}>
 				<Wrapper>
