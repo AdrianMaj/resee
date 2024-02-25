@@ -3,14 +3,16 @@ import classes from './menu.module.scss'
 import MotionLink from '../ui/motionLink'
 import LinkButton from '../ui/linkButton'
 import { motion } from 'framer-motion'
+import { useMediaQuery } from 'react-responsive'
 
 const Menu = () => {
+	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
 	const menuVariants = {
 		hidden: {
-			top: '-250%',
+			scaleY: 0,
 		},
 		shown: {
-			top: '76px',
+			scaleY: 1,
 		},
 	}
 	const elementsVariants = {
@@ -23,7 +25,12 @@ const Menu = () => {
 	}
 
 	return (
-		<motion.div initial="hidden" animate="shown" exit="hidden" variants={menuVariants} className={classes.menu}>
+		<motion.div
+			initial={isMobile ? 'hidden' : 'shown'}
+			animate="shown"
+			exit="hidden"
+			variants={menuVariants}
+			className={classes.menu}>
 			<MotionLink
 				variants={elementsVariants}
 				whileHover={{ color: '#7527f1' }}
