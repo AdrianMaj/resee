@@ -1,3 +1,4 @@
+@use '../components/variables.scss' as *;
 * {
 	margin: 0;
 	padding: 0;
@@ -9,4 +10,16 @@ body {
 	color: #000;
 	font-size: 1.6rem;
 	overflow-x: hidden;
+}
+.section {
+	padding: 2em;
+}
+.paragraph {
+	font-size: $paragraphSize;
+	color: #333;
+}
+@media (min-width: 992px) {
+	.section {
+		padding: 2em 3em;
+	}
 }
