@@ -15,7 +15,7 @@
 	font-weight: 500;
 }
 .feedbackJob {
-	font-size: clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem);
+	font-size: $paragraphSmallSize;
 	color: $primary;
 	margin-bottom: 0.5em;
 }

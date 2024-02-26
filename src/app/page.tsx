@@ -3,6 +3,7 @@ import HeroSection from '@/components/homepage/heroSection'
 import InfoSection from '@/components/homepage/infoSection'
 import TemplateSection from '@/components/homepage/templateSection'
 import Navbar from '@/components/navbar/navbar'
+import FooterSection from '@/components/ui/footerSection'
 
 export default function Page() {
 	return (
@@ -14,6 +15,7 @@ export default function Page() {
 				<TemplateSection />
 				<FeedbackSection />
 			</main>
+			<FooterSection />
 		</>
 	)
 }

@@ -1,0 +1,60 @@
+@use '../variables' as *;
+.footer {
+	padding: 2em;
+	background-color: $primaryDark;
+}
+.logo {
+	margin-top: 2em;
+	width: 60%;
+	max-width: 400px;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 4em;
+}
+.links {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+.linksTitle {
+	font-size: $paragraphBigSize;
+	font-weight: 600;
+	color: white;
+}
+.link {
+	font-size: $paragraphSize;
+	color: #dddddd;
+}
+.attribution {
+	position: relative;
+	padding-top: 1em;
+	margin-top: 2em;
+	text-align: center;
+	font-size: $paragraphSmallSize;
+	color: $background;
+	&::before {
+		position: absolute;
+		content: '';
+		width: 100%;
+		top: 0;
+		left: 0;
+		height: 1px;
+		background-color: $background;
+	}
+}
+@media (min-width: 992px) {
+	.logo {
+		width: 20%;
+		max-width: 200px;
+	}
+	.container {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.links {
+		margin-top: 2.5em;
+		margin-bottom: 2em;
+	}
+}

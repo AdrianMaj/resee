@@ -3,6 +3,7 @@ $primaryDark: #7527f1;
 $primaryLight: #d1b7fa;
 $background: #fafafa;
 $textColor: #000;
+$paragraphSmallSize: clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem);
 $paragraphSize: clamp(1.8rem, 1.6694rem + 0.6531vw, 2.2rem);
 $paragraphBigSize: clamp(2rem, 1.8694rem + 0.6531vw, 2.4rem);
 $headingH1Size: clamp(2.8rem, 2.4735rem + 1.6327vw, 3.8rem);
