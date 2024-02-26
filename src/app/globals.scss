@@ -1,4 +1,11 @@
 @use '../components/variables.scss' as *;
+:root {
+	--swiper-pagination-color: #9357f4;
+	--swiper-pagination-bullet-inactive-color: #d1b7fa;
+	--swiper-pagination-bullet-inactive-opacity: 1;
+	--swiper-pagination-bullet-size: clamp(1.4rem, 1.2092rem + 0.9538vw, 1.8rem);
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -13,11 +20,18 @@ body {
 }
 .section {
 	padding: 2em;
-	margin-bottom: 4em;
+	margin-bottom: 5em;
 }
 .paragraph {
 	font-size: $paragraphSize;
 	color: #333;
+}
+
+.swiper-pagination-bullet {
+	transition: background-color 0.3s;
+	&:hover {
+		background-color: $primary;
+	}
 }
 @media (min-width: 992px) {
 	.section {

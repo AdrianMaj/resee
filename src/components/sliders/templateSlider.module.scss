@@ -1,0 +1,42 @@
+@use '../variables' as *;
+
+.slideImage {
+	border: 5px solid $primaryLight;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.sliderNextElement {
+	background-color: #fff;
+	width: 50px;
+	height: 50px;
+}
+.container {
+	position: relative;
+	padding: 2em 3em;
+}
+.sliderBtn {
+	position: absolute;
+	top: 50%;
+	padding: 1em;
+	background: transparent;
+	border: none;
+	max-width: 75px;
+	width: 25%;
+	z-index: 100;
+	cursor: pointer;
+}
+.sliderNext {
+	right: 0;
+	transform: translate(10%, -50%);
+}
+.sliderPrev {
+	left: 0;
+	transform: translate(-10%, -50%);
+}
+.bullet {
+	background-color: $primary;
+}
+.paginationContainer {
+	display: flex;
+	justify-content: center;
+}
