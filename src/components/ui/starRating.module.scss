@@ -1,9 +1,9 @@
 .container {
 	display: flex;
 	gap: 0.5em;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
-	width: 55%;
+	width: 50%;
 	padding: 1em 0;
 }
 .starIcon {
@@ -11,4 +11,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@media (min-width: 992px) {
+	.container {
+		justify-content: flex-start;
+		width: 35%;
+	}
 }

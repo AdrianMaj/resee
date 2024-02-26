@@ -5,11 +5,7 @@
 	border-bottom-left-radius: 5px;
 	max-width: 330px;
 }
-.container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+
 .feedbackName {
 	font-size: $paragraphBigSize;
 	font-weight: 500;
@@ -20,10 +16,12 @@
 	margin-bottom: 0.5em;
 }
 .btnContainer {
-	margin-top: 2em;
+	margin: 0 auto;
+	margin-top: 4em;
 	display: flex;
 	width: 85%;
-	justify-content: space-around;
+	justify-content: center;
+	gap: 5em;
 }
 .sliderBtn {
 	padding: 0.5em;
@@ -33,6 +31,7 @@
 	border-radius: 50px;
 	border: none;
 	width: 45%;
+	max-width: 250px;
 	z-index: 100;
 	cursor: pointer;
 	svg {
@@ -40,9 +39,90 @@
 		scale: 1.3;
 	}
 }
+.quoteTop {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	&::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		background-image: url('/quote.svg');
+		background-position-y: top;
+		background-position-x: left;
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+}
+.quoteBottom {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	rotate: 180deg;
+	&::before {
+		content: '';
+		position: absolute;
+		top: -30%;
+		left: 4em;
+		width: 50px;
+		height: 50px;
+		background-image: url('/quote.svg');
+		background-position-y: top;
+		background-position-x: left;
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+}
+.marginSpan {
+	margin-right: 3em;
+	font-size: $paragraphSize;
+}
 .feedbackText {
+	padding: 1em 0;
 	font-size: $paragraphSize;
 	&::first-letter {
-		margin-left: 2em;
+		margin-left: 3em;
+	}
+}
+.contentContainer {
+	display: flex;
+	flex-direction: column;
+	margin: auto 0;
+	width: 100%;
+	gap: 0.5em;
+}
+.infoContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5em;
+}
+
+@media (min-width: 992px) {
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.container {
+		flex-direction: row;
+		gap: 4em;
+	}
+	.contentContainer {
+		flex-direction: column-reverse;
+	}
+	.infoContainer {
+		align-items: flex-start;
+	}
+	.feedbackText {
+		padding: 1em 0;
+		padding-right: 1em;
+	}
+	.feedbackImage {
+		border-bottom-left-radius: 100px;
+		border-bottom-right-radius: 5px;
 	}
 }
