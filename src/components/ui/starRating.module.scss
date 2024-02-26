@@ -1,0 +1,14 @@
+.container {
+	display: flex;
+	gap: 0.5em;
+	justify-content: center;
+	align-items: center;
+	width: 55%;
+	padding: 1em 0;
+}
+.starIcon {
+	max-width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

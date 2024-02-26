@@ -1,0 +1,48 @@
+@use '../variables' as *;
+.feedbackImage {
+	width: 100%;
+	border-radius: 100px;
+	border-bottom-left-radius: 5px;
+	max-width: 330px;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.feedbackName {
+	font-size: $paragraphBigSize;
+	font-weight: 500;
+}
+.feedbackJob {
+	font-size: clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem);
+	color: $primary;
+	margin-bottom: 0.5em;
+}
+.btnContainer {
+	margin-top: 2em;
+	display: flex;
+	width: 85%;
+	justify-content: space-around;
+}
+.sliderBtn {
+	padding: 0.5em;
+	display: flex;
+	justify-content: center;
+	background: $primary;
+	border-radius: 50px;
+	border: none;
+	width: 45%;
+	z-index: 100;
+	cursor: pointer;
+	svg {
+		max-height: 50px;
+		scale: 1.3;
+	}
+}
+.feedbackText {
+	font-size: $paragraphSize;
+	&::first-letter {
+		margin-left: 2em;
+	}
+}
