@@ -116,7 +116,10 @@ const SignUpForm = () => {
 						key="asdasdhasuf"
 						animate={{ cursor: stepNumber > 2 ? 'pointer' : 'default' }}
 						onClick={() => {
-							if (stepNumber > 2) {
+							if (
+								stepNumber > 2 ||
+								(formValues.firstName !== '' && formValues.lastName !== '' && formValues.email !== '')
+							) {
 								setStepNumber(2)
 							}
 						}}

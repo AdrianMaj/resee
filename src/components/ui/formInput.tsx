@@ -36,12 +36,12 @@ const FormInput = ({
 		}
 	}
 	useEffect(() => {
-		if ((defaultValue && defaultValue.length > 0) || textInput.value.length > 0) {
+		if ((defaultValue && defaultValue.length > 0) || (textInput && textInput.value.length > 0)) {
 			setIsFilled(true)
 		} else {
 			setIsFilled(false)
 		}
-	}, [defaultValue, textInput.value.length])
+	}, [defaultValue, textInput, textInput.value.length])
 
 	return (
 		<div className={classes.inputContainer}>
