@@ -1,19 +1,33 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import classes from './formInput.module.scss'
 import { motion } from 'framer-motion'
 import { useFormContext } from 'react-hook-form'
 
-const FormInput = ({ type, id, label, ...props }: { type: string; id: string; label: string; [x: string]: any }) => {
+const FormInput = ({
+	type,
+	id,
+	label,
+	defaultValue,
+	...props
+}: {
+	type: string
+	id: string
+	label: string
+	defaultValue?: string
+	[x: string]: any
+}) => {
 	const { register } = useFormContext()
+	const { onChange, onBlur, name, ref } = register(id)
 	const [isFocused, setIsFocused] = useState(false)
 	const [isFilled, setIsFilled] = useState(false)
-	const input = useRef<HTMLInputElement>(null)
+	const input = document.querySelector(`#${id}`)
+	const textInput = input as HTMLInputElement
 	const handleFocus = () => {
 		setIsFocused(true)
 	}
 	const handleBlur = () => {
-		if (input.current && input.current.value.length === 0) {
+		if (input && textInput.value.length === 0) {
 			setIsFocused(false)
 			setIsFilled(false)
 		} else {
@@ -21,6 +35,13 @@ const FormInput = ({ type, id, label, ...props }: { type: string; id: string; la
 			setIsFilled(true)
 		}
 	}
+	useEffect(() => {
+		if ((defaultValue && defaultValue.length > 0) || textInput.value.length > 0) {
+			setIsFilled(true)
+		} else {
+			setIsFilled(false)
+		}
+	}, [defaultValue, textInput.value.length])
 
 	return (
 		<div className={classes.inputContainer}>
@@ -29,11 +50,16 @@ const FormInput = ({ type, id, label, ...props }: { type: string; id: string; la
 				className={classes.input}
 				type={type}
 				id={id}
+				defaultValue={defaultValue}
 				{...props}
-				{...register(id)}
 				onFocus={handleFocus}
-				onBlur={handleBlur}
-				ref={input}
+				onBlur={event => {
+					onBlur(event)
+					handleBlur()
+				}}
+				onChange={onChange}
+				name={name}
+				ref={ref}
 			/>
 			<motion.label
 				animate={{

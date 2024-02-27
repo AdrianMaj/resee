@@ -58,6 +58,30 @@ const SignUpForm = () => {
 	const handleNext = () => {
 		setStepNumber(prevNumber => prevNumber + 1)
 	}
+	const onSubmit = (values: z.infer<typeof FormSchema>) => {
+		setFormValues(prevValues => {
+			const newValues = {
+				...prevValues,
+				firstName: values.firstName,
+				lastName: values.lastName,
+				email: values.email,
+			}
+			return newValues
+		})
+		handleNext()
+	}
+	const onSecondSubmit = (values: z.infer<typeof FormSchema2>) => {
+		setFormValues(prevValues => {
+			const newValues = {
+				...prevValues,
+				password: values.password,
+				confirmPassword: values.confirmPassword,
+			}
+			return newValues
+		})
+		console.log('Handle submission there')
+		console.log(formValues)
+	}
 	return (
 		<FormSiteContainer>
 			<Logo />
@@ -65,6 +89,7 @@ const SignUpForm = () => {
 			<div className={classes.stepIndicator}>
 				<AnimatePresence>
 					<motion.div
+						key="saidasufasfasi"
 						animate={{
 							cursor: stepNumber > 1 ? 'pointer' : 'default',
 						}}
@@ -88,6 +113,7 @@ const SignUpForm = () => {
 						{stepNumber === 1 && <motion.div key={1} layoutId="step" className={classes.stepBg}></motion.div>}
 					</motion.div>
 					<motion.div
+						key="asdasdhasuf"
 						animate={{ cursor: stepNumber > 2 ? 'pointer' : 'default' }}
 						onClick={() => {
 							if (stepNumber > 2) {
@@ -161,6 +187,9 @@ const SignUpForm = () => {
 								<FormInput type="text" id="lastName" defaultValue={formValues.lastName} label="Last Name" />
 								<FormInput type="email" id="email" defaultValue={formValues.email} label="Email" />
 							</div>
+							<p>{form.formState.errors.email?.message}</p>
+							<p>{form.formState.errors.firstName?.message}</p>
+							<p>{form.formState.errors.lastName?.message}</p>
 						</form>
 					</FormProvider>
 					<div className={classes.formControls}>
@@ -174,7 +203,7 @@ const SignUpForm = () => {
 						</Button>
 						<Button
 							type="submit"
-							onClick={handleNext}
+							onClick={form.handleSubmit(onSubmit)}
 							style={{
 								marginLeft: 'auto',
 							}}
@@ -216,6 +245,7 @@ const SignUpForm = () => {
 						</Button>
 						<Button
 							type="submit"
+							onClick={form2.handleSubmit(onSecondSubmit)}
 							style={{
 								marginLeft: 'auto',
 							}}
@@ -225,51 +255,6 @@ const SignUpForm = () => {
 					</div>
 				</>
 			)}
-			{/* <div className={classes.formControls}>
-				{stepNumber === 1 && (
-					<p className={classes.attribution}>
-						By signing up to create an account I accept Company&apos;s{' '}
-						<Link className={classes.attributionLink} href="/terms-of-service">
-							Terms of Service
-						</Link>{' '}
-						and{' '}
-						<Link className={classes.attributionLink} href="/privacy-policy">
-							Privacy Policy
-						</Link>
-					</p>
-				)}
-				{stepNumber > 1 && (
-					<Button
-						type="button"
-						style={{
-							marginRight: 'auto',
-						}}
-						onClick={handleGoBack}>
-						Go Back
-					</Button>
-				)}
-				{stepNumber === 2 && (
-					<Button
-						type="button"
-						style={{
-							marginLeft: 'auto',
-						}}
-						onClick={form.handleSubmit(onSubmit)}
-						filled>
-						Next
-					</Button>
-				)}
-				{stepNumber === 3 && (
-					<Button
-						onClick={form2.handleSubmit(onSubmit2)}
-						style={{
-							marginLeft: 'auto',
-						}}
-						filled>
-						Submit
-					</Button>
-				)}
-			</div> */}
 		</FormSiteContainer>
 	)
 }
