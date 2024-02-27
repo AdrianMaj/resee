@@ -49,7 +49,9 @@ const SignUpForm = () => {
 				<AnimatePresence>
 					<div
 						onClick={() => {
-							setStepNumber(1)
+							if (stepNumber > 1) {
+								setStepNumber(1)
+							}
 						}}
 						className={classes.numberContainer}>
 						<motion.p
@@ -58,6 +60,7 @@ const SignUpForm = () => {
 							}}
 							animate={{
 								color: stepNumber === 1 ? '#ffffff' : '#000000',
+								cursor: stepNumber > 1 ? 'pointer' : 'default',
 							}}
 							className={classes.number}>
 							1
@@ -66,23 +69,22 @@ const SignUpForm = () => {
 					</div>
 					<div
 						onClick={() => {
-							setStepNumber(2)
+							if (stepNumber > 2) {
+								setStepNumber(2)
+							}
 						}}
 						className={classes.numberContainer}>
 						<motion.p
 							animate={{
 								color: stepNumber === 2 ? '#ffffff' : '#000000',
+								cursor: stepNumber > 2 ? 'pointer' : 'default',
 							}}
 							className={classes.number}>
 							2
 						</motion.p>
 						{stepNumber === 2 && <motion.div layoutId="step" className={classes.stepBg}></motion.div>}
 					</div>
-					<div
-						onClick={() => {
-							setStepNumber(3)
-						}}
-						className={classes.numberContainer}>
+					<div className={classes.numberContainer}>
 						<motion.p
 							animate={{
 								color: stepNumber === 3 ? '#ffffff' : '#000000',
