@@ -9,15 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.10.2",
     "framer-motion": "^11.0.6",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.50.1",
     "react-responsive": "^9.0.2",
     "sass": "^1.71.1",
     "swiper": "^11.0.6",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

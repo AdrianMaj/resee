@@ -1,0 +1,93 @@
+@use '../../variables' as *;
+.formHeading {
+	font-size: $headingH1Size;
+	font-weight: 600;
+	text-align: center;
+}
+.form {
+	width: 100%;
+}
+.inputContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+	width: 100%;
+	margin-bottom: 3em;
+}
+.buttonText {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	font-size: $paragraphSize;
+	color: $background;
+}
+.stepIndicator {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	gap: 2em;
+	margin-bottom: 2em;
+}
+.number {
+	font-size: $paragraphBigSize;
+	font-weight: bold;
+	font-variant-numeric: lining-nums;
+}
+.numberContainer {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: 2px solid $primary;
+	background-color: transparent;
+	z-index: 1;
+	cursor: pointer;
+}
+.stepBg {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: $primary;
+	border-radius: 50%;
+	z-index: -1;
+}
+.input {
+	width: 100%;
+	padding: 0.75em;
+	border-radius: 5px;
+	border: 1px solid #bebebe;
+	font-size: $paragraphSize;
+}
+.formControls {
+	display: flex;
+	margin-top: auto;
+	justify-content: space-between;
+	width: 100%;
+}
+.loginAttribution,
+.loginAttributionLink {
+	font-size: $paragraphSmallSize;
+}
+.loginAttribution {
+	margin: 0 auto;
+}
+.loginAttributionLink {
+	color: $primaryDark;
+	font-weight: 500;
+}
+.attribution {
+	margin-top: auto;
+	margin: 0 auto;
+	text-align: center;
+	width: 80%;
+	color: #333;
+	font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
+	.attributionLink {
+		font-size: $primaryDark;
+		text-decoration: none;
+		font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
+	}
+}

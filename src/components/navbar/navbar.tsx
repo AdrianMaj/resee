@@ -8,6 +8,7 @@ import BurgerButton from './burgerButton'
 import { useMediaQuery } from 'react-responsive'
 import Menu from './menu'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
+import Logo from '../ui/logo'
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -52,16 +53,7 @@ const Navbar = () => {
 				className={classes.navbar}>
 				<Wrapper>
 					<div className={classes.navbarContainer}>
-						<Link className={classes.logo} href="/">
-							<Image
-								src="/reseeLogo.svg"
-								width={0}
-								height={0}
-								sizes="100vw"
-								style={{ width: '100%', height: 'auto' }}
-								alt="resee Logo"
-							/>
-						</Link>
+						<Logo />
 						<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 						<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
 					</div>

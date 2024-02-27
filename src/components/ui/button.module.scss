@@ -1,0 +1,22 @@
+@use '../variables.scss' as *;
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	padding: 0.75em 1.125em;
+	background-color: $primary;
+	font-size: $paragraphSize;
+	color: $background;
+	border: 2px solid transparent;
+	text-wrap: nowrap;
+	border-radius: $borderRadius;
+	font-weight: 600;
+	cursor: pointer;
+}
+.textButton {
+	background-color: transparent;
+	color: $primary;
+	border: 2px solid $primary;
+}

@@ -1,0 +1,32 @@
+@use '../variables' as *;
+.formBackgroundContainer {
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-image: url('/formBackground.png');
+	background-position: center;
+	background-size: cover;
+}
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2em;
+	padding: 3em;
+	padding-top: 4em;
+	background-color: $background;
+	width: 100%;
+	height: 100dvh;
+}
+
+@media (min-width: 768px) {
+	.form {
+		border-radius: 10px;
+		width: 100%;
+		height: 100%;
+		max-width: 605px;
+		min-height: 605px;
+	}
+}
