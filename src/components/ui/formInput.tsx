@@ -41,7 +41,7 @@ const FormInput = ({
 		} else {
 			setIsFilled(false)
 		}
-	}, [defaultValue, textInput, textInput.value.length])
+	}, [defaultValue, textInput])
 
 	return (
 		<div className={classes.inputContainer}>
