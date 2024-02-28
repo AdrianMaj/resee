@@ -79,73 +79,110 @@ const SignUpForm = () => {
 			}
 			return newValues
 		})
-		console.log('Handle submission there')
-		console.log(formValues)
+		const data = {
+			name: `${formValues.firstName} ${formValues.lastName}`,
+			email: formValues.email,
+			password: values.password,
+		}
+		// createAccount(data)
+		setStepNumber(4)
+	}
+
+	const createAccount = async ({ name, email, password }: { name: string; email: string; password: string }) => {
+		try {
+			const response = await fetch('/api/user', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					name: name,
+					email: email,
+					password: password,
+				}),
+			})
+
+			if (response.ok) {
+				console.log('Successfully created an account!')
+			}
+		} catch (error) {
+			console.error('An error occured', error)
+		}
 	}
 	return (
 		<FormSiteContainer>
 			<Logo />
-			<h1 className={classes.formHeading}>Create an account</h1>
-			<div className={classes.stepIndicator}>
-				<AnimatePresence>
-					<motion.div
-						key="saidasufasfasi"
-						animate={{
-							cursor: stepNumber > 1 ? 'pointer' : 'default',
-						}}
-						onClick={() => {
-							if (stepNumber > 1) {
-								setStepNumber(1)
-							}
-						}}
-						className={classes.numberContainer}>
-						<motion.p
-							initial={{
-								color: '#ffffff',
-							}}
+			<h1 className={classes.formHeading}>{stepNumber !== 4 ? 'Create an account' : 'Success!'}</h1>
+			{stepNumber !== 4 && (
+				<div className={classes.stepIndicator}>
+					<AnimatePresence>
+						<motion.div
+							key="saidasufasfasi"
 							animate={{
-								color: stepNumber === 1 ? '#ffffff' : '#000000',
 								cursor: stepNumber > 1 ? 'pointer' : 'default',
 							}}
-							className={classes.number}>
-							1
-						</motion.p>
-						{stepNumber === 1 && <motion.div key={1} layoutId="step" className={classes.stepBg}></motion.div>}
-					</motion.div>
-					<motion.div
-						key="asdasdhasuf"
-						animate={{ cursor: stepNumber > 2 ? 'pointer' : 'default' }}
-						onClick={() => {
-							if (
-								stepNumber > 2 ||
-								(formValues.firstName !== '' && formValues.lastName !== '' && formValues.email !== '')
-							) {
-								setStepNumber(2)
-							}
-						}}
-						className={classes.numberContainer}>
-						<motion.p
-							animate={{
-								color: stepNumber === 2 ? '#ffffff' : '#000000',
-								cursor: stepNumber > 2 ? 'pointer' : 'default',
+							onClick={() => {
+								if (stepNumber > 1) {
+									setStepNumber(1)
+								}
 							}}
-							className={classes.number}>
-							2
-						</motion.p>
-						{stepNumber === 2 && <motion.div key={2} layoutId="step" className={classes.stepBg}></motion.div>}
-					</motion.div>
-					<div className={classes.numberContainer}>
-						<motion.p
+							className={classes.numberContainer}>
+							<motion.p
+								initial={{
+									color: '#ffffff',
+								}}
+								animate={{
+									color: stepNumber === 1 ? '#ffffff' : '#000000',
+									cursor: stepNumber > 1 ? 'pointer' : 'default',
+								}}
+								className={classes.number}>
+								1
+							</motion.p>
+							{stepNumber === 1 && <motion.div key={1} layoutId="step" className={classes.stepBg}></motion.div>}
+						</motion.div>
+						<motion.div
+							key="asdasdhasuf"
 							animate={{
-								color: stepNumber === 3 ? '#ffffff' : '#000000',
+								cursor:
+									stepNumber > 2 ||
+									(formValues.firstName !== '' &&
+										formValues.lastName !== '' &&
+										formValues.email !== '' &&
+										stepNumber !== 2)
+										? 'pointer'
+										: 'default',
 							}}
-							className={classes.number}>
-							3
-						</motion.p>
-						{stepNumber === 3 && <motion.div key={3} layoutId="step" className={classes.stepBg}></motion.div>}
-					</div>
-				</AnimatePresence>
-			</div>
+							onClick={() => {
+								if (
+									stepNumber > 2 ||
+									(formValues.firstName !== '' && formValues.lastName !== '' && formValues.email !== '')
+								) {
+									setStepNumber(2)
+								}
+							}}
+							className={classes.numberContainer}>
+							<motion.p
+								animate={{
+									color: stepNumber === 2 ? '#ffffff' : '#000000',
+								}}
+								className={classes.number}>
+								2
+							</motion.p>
+							{stepNumber === 2 && <motion.div key={2} layoutId="step" className={classes.stepBg}></motion.div>}
+						</motion.div>
+						<div className={classes.numberContainer}>
+							<motion.p
+								animate={{
+									color: stepNumber === 3 ? '#ffffff' : '#000000',
+								}}
+								className={classes.number}>
+								3
+							</motion.p>
+							{stepNumber === 3 && <motion.div key={3} layoutId="step" className={classes.stepBg}></motion.div>}
+						</div>
+					</AnimatePresence>
+				</div>
+			)}
 			{stepNumber === 1 && (
 				<>
 					<div className={classes.inputContainer}>
@@ -186,13 +223,23 @@ const SignUpForm = () => {
 									id="firstName"
 									defaultValue={formValues.firstName}
 									label="First Name"
+									error={form.formState.errors.firstName?.message}
 								/>
-								<FormInput type="text" id="lastName" defaultValue={formValues.lastName} label="Last Name" />
-								<FormInput type="email" id="email" defaultValue={formValues.email} label="Email" />
+								<FormInput
+									type="text"
+									id="lastName"
+									defaultValue={formValues.lastName}
+									label="Last Name"
+									error={form.formState.errors.lastName?.message}
+								/>
+								<FormInput
+									type="email"
+									id="email"
+									defaultValue={formValues.email}
+									label="Email"
+									error={form.formState.errors.email?.message}
+								/>
 							</div>
-							<p>{form.formState.errors.email?.message}</p>
-							<p>{form.formState.errors.firstName?.message}</p>
-							<p>{form.formState.errors.lastName?.message}</p>
 						</form>
 					</FormProvider>
 					<div className={classes.formControls}>
@@ -227,12 +274,14 @@ const SignUpForm = () => {
 									id="password"
 									defaultValue={formValues.password}
 									label="Password"
+									error={form2.formState.errors.password?.message}
 								/>
 								<FormInput
 									type="password"
 									id="confirmPassword"
 									defaultValue={formValues.confirmPassword}
 									label="Confirm password"
+									error={form2.formState.errors.confirmPassword?.message}
 								/>
 							</div>
 						</form>
@@ -255,6 +304,16 @@ const SignUpForm = () => {
 							filled>
 							Submit
 						</Button>
+					</div>
+				</>
+			)}
+			{stepNumber === 4 && (
+				<>
+					<div className={classes.inputContainer}>
+						<p className={classes.loginAttribution}>You account was created successfully</p>
+						<Link className={classes.loginAttributionLink} href="/login">
+							Return to login page
+						</Link>
 					</div>
 				</>
 			)}

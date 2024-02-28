@@ -20,6 +20,14 @@
 .inputContainer {
 	position: relative;
 	width: 100%;
+	margin-bottom: 1em;
+}
+.errorMessage {
+	position: absolute;
+	left: 0;
+	margin-top: 0.2em;
+	color: red;
+	font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
 }
 .label {
 	font-size: $paragraphSize;
