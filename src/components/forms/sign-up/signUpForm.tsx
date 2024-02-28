@@ -12,6 +12,7 @@ import Image from 'next/image'
 import GoogleButton from '@/components/ui/googleButton'
 import Link from 'next/link'
 import FormInput from '@/components/ui/formInput'
+import LinkButton from '@/components/ui/linkButton'
 
 const FormSchema = z.object({
 	firstName: z.string().min(1, 'First name is required!').max(100),
@@ -84,8 +85,7 @@ const SignUpForm = () => {
 			email: formValues.email,
 			password: values.password,
 		}
-		// createAccount(data)
-		setStepNumber(4)
+		createAccount(data)
 	}
 
 	const createAccount = async ({ name, email, password }: { name: string; email: string; password: string }) => {
@@ -103,7 +103,7 @@ const SignUpForm = () => {
 			})
 
 			if (response.ok) {
-				console.log('Successfully created an account!')
+				setStepNumber(4)
 			}
 		} catch (error) {
 			console.error('An error occured', error)
@@ -310,10 +310,16 @@ const SignUpForm = () => {
 			{stepNumber === 4 && (
 				<>
 					<div className={classes.inputContainer}>
-						<p className={classes.loginAttribution}>You account was created successfully</p>
-						<Link className={classes.loginAttributionLink} href="/login">
+						<p className={classes.successMessage}>
+							Your account was created successfully, the verification email was sent to the address you entered in the
+							form. Please check your mailbox, and SPAM folder. If the email doesn&quot;t appear within 10 minutes, try
+							creating the account again later.
+						</p>
+					</div>
+					<div className={classes.formControls}>
+						<LinkButton style={{ width: '100%' }} href="/login">
 							Return to login page
-						</Link>
+						</LinkButton>
 					</div>
 				</>
 			)}

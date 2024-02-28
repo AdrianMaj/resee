@@ -77,6 +77,12 @@
 	color: $primaryDark;
 	font-weight: 500;
 }
+.successMessage {
+	font-size: $paragraphSize;
+	color: #333;
+	margin-top: 1em;
+	text-align: center;
+}
 .attribution {
 	margin: 0 auto;
 	margin-top: auto;

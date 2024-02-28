@@ -3,7 +3,7 @@ import prisma from '../../../lib/prisma'
 import { hash } from 'bcrypt'
 import * as z from 'zod'
 import { randomUUID } from 'crypto'
-// import { sendValidationEmail } from '@/util/sendValidationEmail'
+import { sendValidationEmail } from '@/util/sendValidationEmail'
 
 const accountSchema = z.object({
 	name: z.string().min(1, 'Name is required').max(100),
@@ -27,7 +27,7 @@ export const POST = async (req: Request) => {
 					accountId: existingUserByEmail.id,
 				},
 			})
-			// sendValidationEmail(existingUserByEmail, token)
+			sendValidationEmail(existingUserByEmail, token)
 			return NextResponse.json({ user: null, message: 'Activation email sent' }, { status: 409 })
 		} else if (existingUserByEmail && existingUserByEmail.active) {
 			return NextResponse.json({ user: null, message: 'User with that email already exist' }, { status: 409 })
@@ -50,7 +50,7 @@ export const POST = async (req: Request) => {
 			},
 		})
 		try {
-			// sendValidationEmail(newAccount, token)
+			sendValidationEmail(newAccount, token)
 			console.log('Email sent successfully!')
 		} catch (error) {
 			console.error('Error sending email:', error)
