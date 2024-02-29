@@ -1,0 +1,12 @@
+@use '../../variables' as *;
+.formHeading {
+	font-size: $headingH1Size;
+	font-weight: 600;
+	text-align: center;
+}
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+    height: 100%;
+}

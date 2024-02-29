@@ -28,9 +28,12 @@ export const POST = async (req: Request) => {
 				},
 			})
 			await sendValidationEmail(existingUserByEmail, token)
-			return NextResponse.json({ user: null, message: 'Activation email sent' }, { status: 409 })
+			return NextResponse.json(
+				{ user: null, message: "Account with that email exist, but it's not active. Sent new activation email" },
+				{ status: 409 }
+			)
 		} else if (existingUserByEmail && existingUserByEmail.active) {
-			return NextResponse.json({ user: null, message: 'User with that email already exist' }, { status: 409 })
+			return NextResponse.json({ user: null, message: 'Account with that email already exist!' }, { status: 409 })
 		}
 
 		const hashedPassword = await hash(password, 10)
@@ -51,9 +54,11 @@ export const POST = async (req: Request) => {
 		})
 		try {
 			await sendValidationEmail(newAccount, token)
-			console.log('Email sent successfully!')
 		} catch (error) {
-			console.error('Error sending email:', error)
+			return NextResponse.json(
+				{ user: null, message: 'There was a problem with sending verification email. Please try again later.' },
+				{ status: 409 }
+			)
 		}
 
 		const { password: newAccountPassword, ...accountData } = newAccount
@@ -63,6 +68,6 @@ export const POST = async (req: Request) => {
 			{ status: 201 }
 		)
 	} catch (error) {
-		return NextResponse.json({ message: 'Something went wrong!' }, { status: 500 })
+		return NextResponse.json({ message: 'Something went wrong! Please try again later.' }, { status: 500 })
 	}
 }

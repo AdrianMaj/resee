@@ -83,6 +83,11 @@
 	margin-top: 1em;
 	text-align: center;
 }
+.errorMessage {
+	font-size: $paragraphSize;
+	color: red;
+	text-align: center;
+}
 .attribution {
 	margin: 0 auto;
 	margin-top: auto;

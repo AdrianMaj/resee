@@ -31,6 +31,8 @@ const FormSchema2 = z
 
 const SignUpForm = () => {
 	const [stepNumber, setStepNumber] = useState(1)
+	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [error, setError] = useState('')
 	const [formValues, setFormValues] = useState({
 		firstName: '',
 		lastName: '',
@@ -72,6 +74,7 @@ const SignUpForm = () => {
 		handleNext()
 	}
 	const onSecondSubmit = (values: z.infer<typeof FormSchema2>) => {
+		setIsSubmitting(true)
 		setFormValues(prevValues => {
 			const newValues = {
 				...prevValues,
@@ -103,9 +106,15 @@ const SignUpForm = () => {
 			})
 
 			if (response.ok) {
+				setIsSubmitting(false)
 				setStepNumber(4)
+			} else {
+				setIsSubmitting(false)
+				const res = await response.json()
+				setError(res.message)
 			}
 		} catch (error) {
+			setIsSubmitting(false)
 			console.error('An error occured', error)
 		}
 	}
@@ -283,6 +292,7 @@ const SignUpForm = () => {
 									label="Confirm password"
 									error={form2.formState.errors.confirmPassword?.message}
 								/>
+								{error.length > 0 && <p className={classes.errorMessage}>{error}</p>}
 							</div>
 						</form>
 					</FormProvider>
@@ -302,7 +312,7 @@ const SignUpForm = () => {
 								marginLeft: 'auto',
 							}}
 							filled>
-							Submit
+							{isSubmitting ? 'Submitting...' : 'Submit'}
 						</Button>
 					</div>
 				</>
