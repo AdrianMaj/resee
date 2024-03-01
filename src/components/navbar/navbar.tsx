@@ -7,6 +7,7 @@ import { useMediaQuery } from 'react-responsive'
 import Menu from './menu'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import Logo from '../ui/logo'
+import { Account } from '@prisma/client'
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)

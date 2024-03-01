@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './formInput.module.scss'
 import { motion } from 'framer-motion'
 import { useFormContext } from 'react-hook-form'
@@ -22,44 +22,33 @@ const FormInput = ({
 	const { register } = useFormContext()
 	const { onChange, onBlur, name, ref } = register(id)
 	const [isFocused, setIsFocused] = useState(false)
-	const [isFilled, setIsFilled] = useState(false)
-	const [isError, setIsError] = useState(false)
+	const [isFilled, setIsFilled] = useState(Boolean(defaultValue))
+	const [isError, setIsError] = useState(Boolean(error))
 	const [borderState, setBorderState] = useState('1px solid #bebebe')
-	const input = document.querySelector(`#${id}`)
-	const textInput = input as HTMLInputElement
+	const [inputValue, setInputValue] = useState(defaultValue || '')
+
 	const handleFocus = () => {
 		setIsFocused(true)
 	}
+
 	const handleBlur = () => {
-		if (input && textInput.value.length === 0) {
-			setIsFocused(false)
-			setIsFilled(false)
-		} else {
-			setIsFocused(false)
-			setIsFilled(true)
-		}
+		setIsFocused(false)
+		setIsFilled(inputValue.length > 0)
 	}
-	const handleChange = () => {
-		if ((defaultValue && defaultValue.length > 0) || (textInput && textInput.value.length > 0)) {
-			setIsFilled(true)
-		} else {
-			setIsFilled(false)
-		}
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(event.target.value)
+		onChange(event)
 	}
+
 	useEffect(() => {
-		if ((defaultValue && defaultValue.length > 0) || (textInput && textInput.value.length > 0)) {
-			setIsFilled(true)
-		} else {
-			setIsFilled(false)
-		}
-	}, [defaultValue, textInput])
+		setIsFilled(inputValue.length > 0)
+	}, [inputValue])
+
 	useEffect(() => {
-		if (error && error !== '') {
-			setIsError(true)
-		} else {
-			setIsError(false)
-		}
+		setIsError(Boolean(error))
 	}, [error])
+
 	useEffect(() => {
 		if (isFocused && !isError) {
 			setBorderState('1px solid #7527f1')
@@ -77,17 +66,14 @@ const FormInput = ({
 				className={classes.input}
 				type={type}
 				id={id}
-				defaultValue={defaultValue}
+				value={inputValue}
 				{...props}
 				onFocus={handleFocus}
 				onBlur={event => {
 					onBlur(event)
 					handleBlur()
 				}}
-				onChange={event => {
-					onChange(event)
-					handleChange
-				}}
+				onChange={event => handleChange(event)}
 				name={name}
 				ref={ref}
 			/>
