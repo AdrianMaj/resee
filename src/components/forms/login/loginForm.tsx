@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import FormSiteContainer from '../formSiteContainer'
 import Logo from '@/components/ui/logo'
 import classes from './loginForm.module.scss'
@@ -17,6 +17,7 @@ const FormSchema = z.object({
 })
 
 const LoginForm = () => {
+	const [errorMsg, setErrorMsg] = useState('')
 	const router = useRouter()
 	const form = useForm({
 		resolver: zodResolver(FormSchema),
@@ -37,7 +38,7 @@ const LoginForm = () => {
 				console.log('success')
 				router.push('/')
 			} else {
-				// error handling
+				setErrorMsg('Wrong email or password, or the account is not active.')
 			}
 		} catch (error: any) {
 			console.error('Error during sign-in:', error)
@@ -53,6 +54,7 @@ const LoginForm = () => {
 					<FormInput id="email" type="email" label="Email" error={form.formState.errors.email?.message} />
 					<FormInput id="password" type="password" label="Password" error={form.formState.errors.password?.message} />
 				</form>
+				<p>{errorMsg}</p>
 				<Button type="submit" style={{ marginTop: 'auto', width: '100%' }} filled onClick={form.handleSubmit(onSubmit)}>
 					Log in
 				</Button>
