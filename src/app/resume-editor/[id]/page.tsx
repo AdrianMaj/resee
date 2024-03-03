@@ -1,11 +1,13 @@
+import DocumentForm from '@/components/forms/document/documentForm'
+import fetchAccountByDocument from '@/util/fetchAccountByDocument'
 import React from 'react'
 
-const Page = ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
+	const accountWithDocument = await fetchAccountByDocument(params.id)
 	return (
-		<div>
-			Page
-			<p>{params.id}</p>
-		</div>
+		<>
+			<DocumentForm />
+		</>
 	)
 }
 
