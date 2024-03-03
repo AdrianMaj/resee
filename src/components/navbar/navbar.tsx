@@ -7,10 +7,12 @@ import { useMediaQuery } from 'react-responsive'
 import Menu from './menu'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import Logo from '../ui/logo'
+import fetchAccount from '@/util/fetchAccount'
 import { Account } from '@prisma/client'
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const [userAccount, setUserAccount] = useState<Account>()
 	const [isScrollingDown, setIsScrollingDown] = useState(false)
 	const toggleMenu = () => {
 		setIsMenuOpen(prevState => !prevState)
@@ -35,6 +37,16 @@ const Navbar = () => {
 		}
 	}, [isMobile])
 
+	useEffect(() => {
+		const getAccount = async () => {
+			const account = await fetchAccount()
+			if (account) {
+				setUserAccount(account)
+			}
+		}
+		getAccount()
+	}, [])
+
 	return (
 		<>
 			<div className={classes.navbarOffset}></div>
@@ -53,7 +65,7 @@ const Navbar = () => {
 					<div className={classes.navbarContainer}>
 						<Logo />
 						<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-						<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
+						<AnimatePresence>{isMenuOpen && <Menu userAccount={userAccount} />}</AnimatePresence>
 					</div>
 				</Wrapper>
 			</motion.nav>

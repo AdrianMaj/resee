@@ -13,12 +13,13 @@ model Account {
   name               String
   email              String               @unique
   password           String
-  photo              String?
+  photo              String?              
   createdAt          DateTime             @default(now()) @map("created_at")
   updatedAt          DateTime             @updatedAt @map("updated_at")
   active             Boolean              @default(false)
   ActivateToken      ActivateToken[]
   PasswordResetToken PasswordResetToken[]
+  UserDocument       UserDocument[]
 
   @@map("accounts")
 }
@@ -43,4 +44,23 @@ model PasswordResetToken {
   accountId String
   account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
   @@map("password_reset_tokens")
+}
+
+model Theme {
+    id        String      @id @default(cuid())
+    name      String    
+    createdAt   DateTime  @default(now()) @map("created_at")
+    updatedAt   DateTime  @updatedAt @map("updated_at")
+    documents UserDocument[]
+}
+
+model UserDocument {
+    id          String    @id @default(cuid())
+    name        String    
+    themeId     String
+    Theme       Theme     @relation(fields: [themeId], references: [id], onDelete: Cascade)
+    accountId   String
+    account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    createdAt   DateTime  @default(now()) @map("created_at")
+    updatedAt   DateTime  @updatedAt @map("updated_at")
 }

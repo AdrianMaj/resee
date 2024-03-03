@@ -1,12 +1,16 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import classes from './menu.module.scss'
 import MotionLink from '../ui/motionLink'
 import LinkButton from '../ui/linkButton'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
+import { Account } from '@prisma/client'
+import Image from 'next/image'
 
-const Menu = () => {
+const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
 	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
+	const [isUserMenuOpened, setIsUserMenuOpened] = useState(false)
 	const menuVariants = {
 		hidden: {
 			scaleY: 0,
@@ -23,6 +27,11 @@ const Menu = () => {
 			opacity: 1,
 		},
 	}
+
+	const toggleUserMenu = () => {
+		setIsUserMenuOpened(prevState => !prevState)
+	}
+	const MotionImage = motion(Image)
 
 	return (
 		<motion.div
@@ -46,18 +55,72 @@ const Menu = () => {
 				Resume Editor
 			</MotionLink>
 			<div className={classes.menuLine}></div>
-			<div className={classes.loginContainer}>
-				<MotionLink
-					variants={elementsVariants}
-					whileHover={{ color: '#7527f1' }}
-					className={`${classes.menuLink} ${classes.loginLink}`}
-					href="/login">
-					Log in
-				</MotionLink>
-				<LinkButton variants={elementsVariants} href="/sign-up">
-					Sign up
-				</LinkButton>
-			</div>
+			{userAccount ? (
+				<div className={classes.detailsContainer}>
+					<motion.div className={classes.photoContainer} onClick={toggleUserMenu}>
+						<Image
+							className={classes.avatar}
+							width={0}
+							height={0}
+							sizes="100vw"
+							src={userAccount.photo || '/user.svg'}
+							alt={userAccount.name}
+						/>
+						{isMobile ? (
+							<p className={classes.userName}>{userAccount.name}</p>
+						) : (
+							<div className={classes.iconContainer}>
+								<MotionImage
+									animate={{ rotate: !isUserMenuOpened ? [180, 0] : [0, 180] }}
+									className={classes.avatarArrow}
+									width={0}
+									height={0}
+									sizes="100vw"
+									src="/avatarArrow.svg"
+									alt={userAccount.name}
+								/>
+							</div>
+						)}
+					</motion.div>
+					<AnimatePresence>
+						{(isMobile || isUserMenuOpened) && (
+							<motion.div
+								initial={{ scaleY: 0, scaleX: 0 }}
+								animate={{ scaleY: 1, scaleX: 1 }}
+								exit={{ scaleY: 0, scaleX: 0 }}
+								className={classes.userLinks}>
+								<MotionLink
+									variants={elementsVariants}
+									whileHover={{ color: '#7527f1' }}
+									className={`${classes.menuLink}`}
+									href="/resume-editor">
+									My account
+								</MotionLink>
+								<MotionLink
+									variants={elementsVariants}
+									whileHover={{ color: '#7527f1' }}
+									className={`${classes.menuLink}`}
+									href="/resume-editor">
+									My templates
+								</MotionLink>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
+			) : (
+				<div className={classes.loginContainer}>
+					<MotionLink
+						variants={elementsVariants}
+						whileHover={{ color: '#7527f1' }}
+						className={`${classes.menuLink} ${classes.loginLink}`}
+						href="/login">
+						Log in
+					</MotionLink>
+					<LinkButton variants={elementsVariants} href="/sign-up">
+						Sign up
+					</LinkButton>
+				</div>
+			)}
 		</motion.div>
 	)
 }
