@@ -26,6 +26,11 @@ body {
 	font-size: $paragraphSize;
 	color: #333;
 }
+.headingH1 {
+	font-size: $headingH1Size;
+	font-weight: 600;
+	text-align: center;
+}
 
 .swiper-pagination-bullet {
 	transition: background-color 0.3s;

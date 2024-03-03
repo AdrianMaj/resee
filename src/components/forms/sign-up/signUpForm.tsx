@@ -224,7 +224,7 @@ const SignUpForm = () => {
 			{stepNumber === 2 && (
 				<>
 					<FormProvider {...form}>
-						<form className={classes.form}>
+						<form onSubmit={form.handleSubmit(onSubmit)} className={classes.form}>
 							<div className={classes.inputContainer}>
 								<FormInput
 									autoFocus
@@ -275,7 +275,7 @@ const SignUpForm = () => {
 			{stepNumber === 3 && (
 				<>
 					<FormProvider {...form2}>
-						<form className={classes.form}>
+						<form onSubmit={form2.handleSubmit(onSecondSubmit)} className={classes.form}>
 							<div className={classes.inputContainer}>
 								<FormInput
 									autoFocus

@@ -50,7 +50,7 @@ const LoginForm = () => {
 			<Logo />
 			<h1 className={classes.formHeading}>Login to your account</h1>
 			<FormProvider {...form}>
-				<form className={classes.form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className={classes.form}>
 					<FormInput id="email" type="email" label="Email" error={form.formState.errors.email?.message} />
 					<FormInput id="password" type="password" label="Password" error={form.formState.errors.password?.message} />
 				</form>

@@ -1,0 +1,10 @@
+@use '../../variables' as *;
+.formSection {
+	width: 100%;
+}
+.form {
+	margin-top: 2em;
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+}
