@@ -1,5 +1,7 @@
 import DocumentContainer from '@/components/document/documentContainer'
+import ThemeContainer from '@/components/document/themeContainer'
 import DocumentForm from '@/components/forms/document/documentForm'
+import ThemeClassical from '@/components/themes/themeClassical'
 import Wrapper from '@/components/ui/wrapper'
 import fetchAccountByDocument from '@/util/fetchAccountByDocument'
 import { notFound } from 'next/navigation'
@@ -11,6 +13,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 		return (
 			<DocumentContainer>
 				<DocumentForm userDocument={accountWithDocument.UserDocument} account={accountWithDocument} />
+				<ThemeContainer />
 			</DocumentContainer>
 		)
 	} else {

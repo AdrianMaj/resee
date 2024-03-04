@@ -1,0 +1,54 @@
+@use '../variables' as *;
+.input {
+	position: relative;
+	width: 100%;
+	padding: 0.75em;
+	border-radius: 5px;
+	border: 1px solid #bebebe;
+	font-size: $paragraphSize;
+	outline: none;
+	max-width: 100%;
+	min-width: 100%;
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: #000000;
+		transition: background-color 5000s ease-in-out 0s;
+		box-shadow: inset 0 0 500px 500px #ffffff;
+	}
+}
+.inputContainer {
+	position: relative;
+	width: 100%;
+	margin-bottom: 1em;
+}
+.errorMessage {
+	position: absolute;
+	left: 0;
+	margin-top: 0.2em;
+	color: red;
+	font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
+}
+.label {
+	font-size: $paragraphSize;
+	position: absolute;
+	font-weight: 500;
+	left: 0.9em;
+	top: 0;
+	transform: translateY(-50%);
+	color: #686868;
+	pointer-events: none;
+	.labelBackground {
+		position: absolute;
+		width: calc(100% + 10px);
+		background-color: #fff;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		height: 50%;
+		z-index: -1;
+		pointer-events: none;
+	}
+}
