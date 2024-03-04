@@ -1,7 +1,7 @@
 @use '../../variables' as *;
 .formSection {
-	width: 50%;
-	padding: 4em;
+	width: 100%;
+	padding: 4em 2em;
 }
 .form {
 	margin-top: 2em;
@@ -17,4 +17,9 @@
 	font-size: $paragraphSmallSize;
 	margin-bottom: 1em;
 	margin-top: 0.5em;
+}
+@media (min-width: 992px) {
+	.formSection {
+		width: 50%;
+	}
 }

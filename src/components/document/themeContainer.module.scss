@@ -1,10 +1,19 @@
 .container {
-	position: fixed;
+	position: absolute;
 	top: 0;
-	right: 0;
-	width: 50%;
-	display: flex;
-	justify-content: center;
+	left: 50%;
+	transform: translateX(-50%);
 	background-color: #bebebe;
+	width: 100svw;
 	height: 100dvh;
+	padding: 2em;
+}
+
+@media (min-width: 992px) {
+	.container {
+		position: sticky;
+		width: 50%;
+		right: 0;
+		transform: translateY(0);
+	}
 }
