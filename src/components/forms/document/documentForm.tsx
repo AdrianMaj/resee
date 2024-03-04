@@ -26,7 +26,7 @@ const FormSchema = z.object({
 	// languages: z.array(z.string()), string
 })
 
-const DocumentForm = ({ userDocument, account }: { userDocument: UserDocument[]; account: Account }) => {
+const DocumentForm = ({ userDocument, account }: { userDocument: UserDocument; account: Account }) => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const router = useRouter()
 	const form = useForm({
@@ -50,7 +50,7 @@ const DocumentForm = ({ userDocument, account }: { userDocument: UserDocument[];
 
 	return (
 		<section className={classes.formSection}>
-			<h1 className="headingH1">{userDocument[0].name}</h1>
+			<h1 className="headingH1">{userDocument.name}</h1>
 			<FormProvider {...form}>
 				<form className={classes.form}>
 					<h2 className={classes.headingH2}>Personal info</h2>

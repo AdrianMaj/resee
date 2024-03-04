@@ -1,7 +1,26 @@
+@use '../variables' as *;
 .container {
 	margin: 0 auto;
-	padding: 2em;
+	padding: 2.5em;
 	border-radius: 5px;
 	aspect-ratio: 1/1.414;
+	max-height: 100%;
 	background-color: #fff;
+}
+.image {
+	width: 25%;
+	height: auto;
+	aspect-ratio: 1/1;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 50%;
+}
+.firstLineContainer {
+	display: flex;
+	gap: 4%;
+}
+.textBold {
+	margin-top: 1%;
+	font-weight: 600;
+	font-size: $paragraphBigSize;
 }

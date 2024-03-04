@@ -3,17 +3,18 @@ import ThemeContainer from '@/components/document/themeContainer'
 import DocumentForm from '@/components/forms/document/documentForm'
 import ThemeClassical from '@/components/themes/themeClassical'
 import Wrapper from '@/components/ui/wrapper'
-import fetchAccountByDocument from '@/util/fetchAccountByDocument'
+import fetchDocumentWithAccount from '@/util/fetchDocumentWithAccount'
 import { notFound } from 'next/navigation'
 import React from 'react'
+import { PDFViewer } from '@react-pdf/renderer'
 
 const Page = async ({ params }: { params: { id: string } }) => {
-	const accountWithDocument = await fetchAccountByDocument(params.id)
-	if (accountWithDocument) {
+	const documentWithAccount = await fetchDocumentWithAccount(params.id)
+	if (documentWithAccount) {
 		return (
 			<DocumentContainer>
-				<DocumentForm userDocument={accountWithDocument.UserDocument} account={accountWithDocument} />
-				<ThemeContainer />
+				<DocumentForm userDocument={documentWithAccount} account={documentWithAccount.account} />
+				<ThemeContainer documentData={documentWithAccount} />
 			</DocumentContainer>
 		)
 	} else {
