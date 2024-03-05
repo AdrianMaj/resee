@@ -1,7 +1,7 @@
 'use client'
 import Button from '@/components/ui/button'
 import FormInput from '@/components/ui/formInput'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation'
 import classes from './documentForm.module.scss'
 import { Account, UserDocument } from '@prisma/client'
 import FormTextArea from '@/components/ui/formTextArea'
+import _ from 'lodash'
+import updateDocument from '@/util/updateDocument'
 
 const FormSchema = z.object({
 	jobTitle: z.string(),
@@ -20,13 +22,21 @@ const FormSchema = z.object({
 	country: z.string(),
 	city: z.string(),
 	summary: z.string(),
-	// employment: z.string().array(), object
-	// education: z.string().array(), object
-	// skills: z.array(z.string()), string
-	// languages: z.array(z.string()), string
+	// employment: z.string().array(),
+	// education: z.string().array(),
+	// skills: z.array(z.string()),
+	// languages: z.array(z.string()),
 })
 
-const DocumentForm = ({ userDocument, account }: { userDocument: UserDocument; account: Account }) => {
+const DocumentForm = ({
+	userDocument,
+	account,
+	handleSetDocumentData,
+}: {
+	userDocument: UserDocument
+	account: Account
+	handleSetDocumentData: (documentData: UserDocument) => void
+}) => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const router = useRouter()
 	const form = useForm({
@@ -43,6 +53,22 @@ const DocumentForm = ({ userDocument, account }: { userDocument: UserDocument; a
 			summary: '',
 		},
 	})
+
+	useEffect(() => {
+		const debouncedLogValues = _.debounce(async values => {
+			const result = await updateDocument(userDocument.id, values)
+			handleSetDocumentData(result)
+		}, 1000)
+
+		const subscription = form.watch(values => {
+			debouncedLogValues(values)
+		})
+
+		return () => {
+			subscription.unsubscribe()
+			debouncedLogValues.cancel()
+		}
+	}, [form, form.watch, handleSetDocumentData, userDocument.id])
 
 	const onSubmit = async (values: z.infer<typeof FormSchema>) => {
 		console.log(values)
