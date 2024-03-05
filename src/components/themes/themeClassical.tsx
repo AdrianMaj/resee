@@ -75,19 +75,21 @@ const styles = StyleSheet.create({
 		fontSize: 11,
 		marginTop: 'auto',
 	},
+	bodyText: {
+		fontSize: 12,
+	},
 })
 const ThemeClassical = ({ documentData }: { documentData: UserDocument }) => {
 	return (
 		<Document>
 			<Page size="A4" style={styles.page}>
 				<View style={styles.section}>
-					<Image
-						style={styles.image}
-						src="https://res.cloudinary.com/dcl15uhh0/image/upload/v1708338946/pumpfit/qc1nvmjz3961axwxgxse.png"
-					/>
+					{documentData.photoUrl && documentData.photoUrl !== '' && (
+						<Image style={styles.image} src={documentData.photoUrl} />
+					)}
 					<View style={styles.column}>
 						<Text style={styles.text}>{documentData.firstName + ' ' + documentData.lastName || '[Your Name]'}</Text>
-						<Text style={styles.subtext}>Frontend Developer</Text>
+						<Text style={styles.subtext}>{documentData.jobTitle || '[Job Title]'}</Text>
 						<View style={styles.row}>
 							<Text style={styles.subtextWidth}>{documentData.phone || '[Phone number]'}</Text>
 							<Text style={styles.subtextWidth}>{documentData.email || '[Your Email]'}</Text>
@@ -119,7 +121,7 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocument }) => {
 				</View>
 				<View style={styles.container}>
 					<View style={styles.sectionFull}>
-						<Text style={styles.sectionText}>Summary</Text>
+						<Text style={styles.bodyText}>Summary</Text>
 						<Text>{documentData.summary}</Text>
 					</View>
 				</View>

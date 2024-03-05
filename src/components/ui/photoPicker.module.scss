@@ -1,0 +1,20 @@
+@use '../variables' as *;
+.documentImage {
+	width: 10em;
+	height: 10em;
+	border-radius: 5px;
+}
+.fileInput {
+	display: none;
+}
+.imageLabelText {
+	font-size: $paragraphSmallSize;
+	font-weight: 500;
+	color: #686868;
+}
+.imageLabel {
+	cursor: pointer;
+}
+.inputNote {
+	font-size: 1.4rem;
+}

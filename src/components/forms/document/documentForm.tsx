@@ -11,6 +11,7 @@ import { Account, UserDocument } from '@prisma/client'
 import FormTextArea from '@/components/ui/formTextArea'
 import _ from 'lodash'
 import updateDocument from '@/util/updateDocument'
+import PhotoPicker from '@/components/ui/photoPicker'
 
 const FormSchema = z.object({
 	jobTitle: z.string(),
@@ -57,6 +58,7 @@ const DocumentForm = ({
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
 			const result = await updateDocument(userDocument.id, values)
+			console.log(values)
 			handleSetDocumentData(result)
 		}, 1000)
 
@@ -74,12 +76,40 @@ const DocumentForm = ({
 		console.log(values)
 	}
 
+	const handleUpdatePhoto = (files: FileList) => {
+		if (files && files[0] && files[0].type.startsWith('image') && files[0].size < 10485760) {
+			handleUploadPhoto(files[0])
+			const url = URL.createObjectURL(files[0])
+			form.setValue('photoUrl', url)
+		} else if (files && files[0] && files[0].type.startsWith('image') && files[0].size > 10485760) {
+			alert('File is too big to be uploaded. (Max size is 10 MB)')
+		} else {
+			return
+		}
+	}
+	const handleUploadPhoto = async (file: File) => {
+		const formData = new FormData()
+		formData.append('file', file)
+		formData.append('upload_preset', 'reseePhotos')
+		try {
+			const response = await fetch(`https://api.cloudinary.com/v1_1/dcl15uhh0/image/upload`, {
+				method: 'POST',
+				body: formData,
+			})
+			const res = await response.json()
+			form.setValue('photoUrl', res.secure_url)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	return (
 		<section className={classes.formSection}>
 			<h1 className="headingH1">{userDocument.name}</h1>
 			<FormProvider {...form}>
 				<form className={classes.form}>
 					<h2 className={classes.headingH2}>Personal info</h2>
+					<PhotoPicker id="photoUrl" photoUrl={form.getValues('photoUrl')} handleUpdatePhoto={handleUpdatePhoto} />
 					<FormInput type="text" id="jobTitle" label="Job Title" defaultValue={userDocument.jobTitle || undefined} />
 					<FormInput
 						type="text"
@@ -106,14 +136,15 @@ const DocumentForm = ({
 						<FormTextArea type="text" id="summary" label="Summary" defaultValue={userDocument.summary || undefined} />
 					</div>
 					<h2 className={classes.headingH2}>Employment History</h2>
+					<p>To be filled.</p>
 					<h2 className={classes.headingH2}>Education</h2>
+					<p>To be filled.</p>
 					<h2 className={classes.headingH2}>Skills</h2>
+					<p>To be filled.</p>
 					<h2 className={classes.headingH2}>Languages</h2>
+					<p>To be filled.</p>
 				</form>
 				<p>{errorMsg}</p>
-				<Button type="submit" style={{ marginTop: 'auto', width: '100%' }} filled onClick={form.handleSubmit(onSubmit)}>
-					Download your resume
-				</Button>
 			</FormProvider>
 		</section>
 	)
