@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: '25%',
-		height: 160,
+		aspectRatio: 1 / 1.2,
 		objectFit: 'cover',
+		borderRadius: 5,
 	},
 	text: {
 		fontSize: 25,

@@ -1,7 +1,9 @@
 @use '../variables' as *;
 .documentImage {
-	width: 10em;
-	height: 10em;
+	width: 14em;
+	height: auto;
+	aspect-ratio: 1/1.2;
+	object-fit: cover;
 	border-radius: 5px;
 }
 .fileInput {

@@ -9,7 +9,7 @@ import _ from 'lodash'
 import { pdfjs } from 'react-pdf'
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
-	const [instance, update] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
+	const [instance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
 	const [uploadedFile, setUploadedFile] = useState({ URL: '', publicId: '' })
 	const [previousUploadedFile, setPreviousUploadedFile] = useState({ URL: '', publicId: '' })
 	pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
@@ -67,9 +67,6 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 					renderTextLayer={false}
 				/>
 			</Document>
-			{/* <PDFViewer className={classes.document}>
-				<ThemeClassical documentData={documentData} />
-			</PDFViewer> */}
 		</section>
 	)
 }
