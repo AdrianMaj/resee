@@ -7,6 +7,7 @@ import { PDFViewer, usePDF } from '@react-pdf/renderer'
 import { Document, Page } from 'react-pdf'
 import _ from 'lodash'
 import { pdfjs } from 'react-pdf'
+import updatePDFUrl from '@/util/updatePDFUrl'
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 	const [instance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
@@ -15,19 +16,6 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 	pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 	useEffect(() => {
 		const handleInstanceChange = async () => {
-			// if (previousUploadedFile.URL) {
-			// 	const formData = new FormData()
-			// 	formData.append('public_id', uploadedFile.publicId)
-			// 	formData.append('api_key', '912343266688667')
-			// 	try {
-			// 		await fetch(`https://api.cloudinary.com/v1_1/dcl15uhh0/raw/destroy`, {
-			// 			method: 'POST',
-			// 			body: formData,
-			// 		})
-			// 	} catch (error) {
-			// 		console.error(error)
-			// 	}
-			// }
 			if (instance.blob) {
 				const file = new File([instance.blob], `${documentData.name}.pdf`, {
 					type: instance.blob.type,
@@ -46,6 +34,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 						URL: res.secure_url,
 						publicId: res.public_id,
 					})
+					updatePDFUrl(documentData.id, res.secure_url, res.public_id)
 				} catch (error) {
 					console.error(error)
 				}
@@ -54,7 +43,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 
 		const debouncedHandleInstanceChange = _.debounce(handleInstanceChange, 1000)
 		debouncedHandleInstanceChange()
-	}, [instance.blob, uploadedFile, previousUploadedFile.URL, documentData.name])
+	}, [instance.blob, uploadedFile, previousUploadedFile.URL, documentData.id, documentData.name])
 	return (
 		<section className={classes.container}>
 			<a href={uploadedFile.URL}>Test URL</a>
