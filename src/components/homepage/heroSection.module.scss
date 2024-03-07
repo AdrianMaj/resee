@@ -1,88 +1,86 @@
 @use '../variables.scss' as *;
-
-.heroImg {
-	width: 80%;
-	max-width: 400px;
-}
-.headingH1 {
-	font-size: $headingH1Size;
-	font-weight: 600;
-	text-align: center;
-}
-.heroParagraph {
-	text-align: center;
-}
-.textContainer {
-	display: flex;
-	flex-direction: column;
-	gap: 2.5em;
-	align-items: center;
-}
-.container {
+.hero {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 2em;
-}
-.infoContainer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	gap: 1em;
-	padding: 0 1em;
-}
-.cupIcon {
-	width: 17.5%;
-	max-width: 70px;
-}
-.cupParagraph {
-	color: black;
-	font-size: $paragraphBigSize;
-}
-.cupSpan {
-	font-size: $paragraphBigSize;
-	color: $primary;
-	font-weight: bold;
-}
-.header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1em;
+	&__image {
+		width: 80%;
+		max-width: 400px;
+	}
+	&__headingH1 {
+		font-size: $headingH1Size;
+		font-weight: 600;
+		text-align: center;
+	}
+	&__paragraph {
+		text-align: center;
+	}
+	&__textContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5em;
+		align-items: center;
+	}
+	&__infoContainer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		gap: 1em;
+		padding: 0 1em;
+	}
+	&__cupIcon {
+		width: 17.5%;
+		max-width: 70px;
+	}
+	&__cupParagraph {
+		font-size: $paragraphBigSize;
+	}
+	&__cupSpan {
+		font-size: $paragraphBigSize;
+		color: $primary;
+		font-weight: bold;
+	}
+	&__header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1em;
+	}
 }
 
 @media (min-width: 992px) {
-	.container {
+	.hero {
 		flex-direction: row;
 		margin-top: 3em;
 		gap: 5em;
-	}
-	.textContainer {
-		align-items: flex-start;
-		gap: 3em;
-	}
-	.infoContainer {
-		justify-content: flex-start;
-		padding: 0;
-	}
-	.headingH1 {
-		text-align: left;
-		width: 100%;
-	}
-	.cupIcon {
-		width: 15%;
-		max-width: 60px;
-	}
-	.heroParagraph {
-		text-align: left;
-	}
-	.heroImg {
-		width: auto;
-		max-width: 450px;
-	}
-	.header {
-		width: 100%;
-		gap: 2em;
+		&__textContainer {
+			align-items: flex-start;
+			gap: 3em;
+		}
+		&__infoContainer {
+			justify-content: flex-start;
+			padding: 0;
+		}
+		&__headingH1 {
+			text-align: left;
+			width: 100%;
+		}
+		&__cupIcon {
+			width: 15%;
+			max-width: 60px;
+		}
+		&__paragraph {
+			text-align: left;
+		}
+		&__heroImg {
+			width: auto;
+			max-width: 450px;
+		}
+		&__header {
+			width: 100%;
+			gap: 2em;
+		}
 	}
 }

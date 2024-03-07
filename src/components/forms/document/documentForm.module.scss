@@ -2,21 +2,21 @@
 .formSection {
 	width: 100%;
 	padding: 4em 2em;
-}
-.form {
-	margin-top: 2em;
-	display: flex;
-	flex-direction: column;
-	gap: 2em;
-}
-.headingH2 {
-	font-size: $paragraphBigSize;
-	font-weight: 600;
-}
-.paragraphSmall {
-	font-size: $paragraphSmallSize;
-	margin-bottom: 1em;
-	margin-top: 0.5em;
+	&__form {
+		margin-top: 2em;
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+	&__headingH2 {
+		font-size: $paragraphBigSize;
+		font-weight: 600;
+	}
+	&__paragraphSmall {
+		font-size: $paragraphSmallSize;
+		margin-bottom: 1em;
+		margin-top: 0.5em;
+	}
 }
 @media (min-width: 992px) {
 	.formSection {

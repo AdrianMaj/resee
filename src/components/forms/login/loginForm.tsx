@@ -4,30 +4,26 @@ import FormSiteContainer from '../formSiteContainer'
 import Logo from '@/components/ui/logo'
 import classes from './loginForm.module.scss'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import FormInput from '@/components/ui/formInput'
 import Button from '@/components/ui/button'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-
-const FormSchema = z.object({
-	email: z.string().min(1, 'Email is required!').email('Invalid email!'),
-	password: z.string().min(1, 'Password is required'),
-})
+import { LoginFormSchema } from './loginForm.data'
+import * as z from 'zod'
 
 const LoginForm = () => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const router = useRouter()
 	const form = useForm({
-		resolver: zodResolver(FormSchema),
+		resolver: zodResolver(LoginFormSchema),
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 	})
 
-	const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+	const onSubmit = async (values: z.infer<typeof LoginFormSchema>) => {
 		try {
 			const result = await signIn('credentials', {
 				email: values.email,

@@ -6,9 +6,9 @@ import LinkButton from '../ui/linkButton'
 
 const HeroSection = () => {
 	return (
-		<section className={`section`}>
+		<section className="section">
 			<Wrapper>
-				<div className={classes.container}>
+				<div className={classes.hero}>
 					<Image
 						src="/heroImg.png"
 						alt="Illustration of person holding resume"
@@ -16,17 +16,17 @@ const HeroSection = () => {
 						height={0}
 						sizes="100vw"
 						style={{ height: 'auto' }}
-						className={classes.heroImg}
+						className={classes.hero__image}
 					/>
-					<div className={classes.textContainer}>
-						<header className={classes.header}>
-							<h1 className={classes.headingH1}>Unlock your career potential with our Resume Creator!</h1>
-							<p className={`paragraph ${classes.heroParagraph}`}>
+					<div className={classes.hero__textContainer}>
+						<header className={classes.hero__header}>
+							<h1 className={classes.hero__headingH1}>Unlock your career potential with our Resume Creator!</h1>
+							<p className={`paragraph ${classes.hero__paragraph}`}>
 								Resee provides an easy-to-use platform for crafting resumes. With customizable templates and many design
 								tools, resee helps individuals create impactful resumes easily.
 							</p>
 						</header>
-						<div className={classes.infoContainer}>
+						<div className={classes.hero__infoContainer}>
 							<Image
 								src="/cup.svg"
 								alt="Illustration of purple cup"
@@ -34,10 +34,10 @@ const HeroSection = () => {
 								height={0}
 								sizes="100vw"
 								style={{ height: 'auto' }}
-								className={classes.cupIcon}
+								className={classes.hero__cupIcon}
 							/>
-							<p className={`paragraph ${classes.cupParagraph}`}>
-								Our users find jobs <span className={`paragraph ${classes.cupSpan}`}>2 times</span>
+							<p className={`paragraph ${classes.hero__cupParagraph}`}>
+								Our users find jobs <span className={`paragraph ${classes.hero__cupSpan}`}>2 times</span>
 								<br /> faster than the rest!
 							</p>
 						</div>

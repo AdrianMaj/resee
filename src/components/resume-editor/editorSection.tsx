@@ -19,8 +19,8 @@ const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userI
 		<main className="section">
 			<Wrapper>
 				<header className={classes.header}>
-					<h1 className={classes.headingH1}>Your documents</h1>
-					<p className={classes.paragraph}>Select your document or create new one</p>
+					<h1 className={classes.header__headingH1}>Your documents</h1>
+					<p className={classes.header__paragraph}>Select your document or create new one</p>
 				</header>
 				<section className={classes.documentSection}>
 					{documents.map(document => (

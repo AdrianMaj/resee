@@ -8,11 +8,13 @@ cloudinary.v2.config({
 	api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-const updatePDFUrl = async (id: string, pdfUrl: string, deleteId: string) => {
+const updatePDFUrl = async (id: string, pdfUrl: string, deleteId?: string) => {
 	const options = {
 		invalidate: true,
 	}
-	await cloudinary.v2.uploader.destroy(deleteId, options)
+	if (deleteId) {
+		await cloudinary.v2.uploader.destroy(deleteId, options)
+	}
 	const document = await prisma.userDocument.update({
 		where: {
 			id,

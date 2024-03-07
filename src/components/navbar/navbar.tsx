@@ -62,7 +62,7 @@ const Navbar = () => {
 				}}
 				className={classes.navbar}>
 				<Wrapper>
-					<div className={classes.navbarContainer}>
+					<div className={classes.navbar__container}>
 						<Logo />
 						<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 						<AnimatePresence>{isMenuOpen && <Menu userAccount={userAccount} />}</AnimatePresence>

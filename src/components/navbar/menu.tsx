@@ -43,23 +43,23 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
 			<MotionLink
 				variants={elementsVariants}
 				whileHover={{ color: '#7527f1' }}
-				className={`${classes.menuLink}`}
+				className={`${classes.menu__link}`}
 				href="/resume-templates">
 				Resume Templates
 			</MotionLink>
 			<MotionLink
 				variants={elementsVariants}
 				whileHover={{ color: '#7527f1' }}
-				className={`${classes.menuLink}`}
+				className={`${classes.menu__link}`}
 				href="/resume-editor">
 				Resume Editor
 			</MotionLink>
-			<div className={classes.menuLine}></div>
+			<div className={classes.menu__line}></div>
 			{userAccount ? (
-				<div className={classes.detailsContainer}>
-					<motion.div className={classes.photoContainer} onClick={toggleUserMenu}>
+				<div className={classes.menu__detailsContainer}>
+					<motion.div className={classes.menu__photoContainer} onClick={toggleUserMenu}>
 						<Image
-							className={classes.avatar}
+							className={classes.menu__avatar}
 							width={0}
 							height={0}
 							sizes="100vw"
@@ -67,12 +67,12 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
 							alt={userAccount.name}
 						/>
 						{isMobile ? (
-							<p className={classes.userName}>{userAccount.name}</p>
+							<p className={classes.menu__userName}>{userAccount.name}</p>
 						) : (
-							<div className={classes.iconContainer}>
+							<div className={classes.menu__iconContainer}>
 								<MotionImage
 									animate={{ rotate: !isUserMenuOpened ? [180, 0] : [0, 180] }}
-									className={classes.avatarArrow}
+									className={classes.menu__avatarArrow}
 									width={0}
 									height={0}
 									sizes="100vw"
@@ -88,18 +88,18 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
 								initial={{ scaleY: 0, scaleX: 0 }}
 								animate={{ scaleY: 1, scaleX: 1 }}
 								exit={{ scaleY: 0, scaleX: 0 }}
-								className={classes.userLinks}>
+								className={classes.menu__userLinks}>
 								<MotionLink
 									variants={elementsVariants}
 									whileHover={{ color: '#7527f1' }}
-									className={`${classes.menuLink}`}
+									className={`${classes.menu__link}`}
 									href="/resume-editor">
 									My account
 								</MotionLink>
 								<MotionLink
 									variants={elementsVariants}
 									whileHover={{ color: '#7527f1' }}
-									className={`${classes.menuLink}`}
+									className={`${classes.menu__link}`}
 									href="/resume-editor">
 									My templates
 								</MotionLink>
@@ -108,11 +108,11 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
 					</AnimatePresence>
 				</div>
 			) : (
-				<div className={classes.loginContainer}>
+				<div className={classes.menu__loginContainer}>
 					<MotionLink
 						variants={elementsVariants}
 						whileHover={{ color: '#7527f1' }}
-						className={`${classes.menuLink} ${classes.loginLink}`}
+						className={`${classes.menu__link} ${classes.menu__loginLink}`}
 						href="/login">
 						Log in
 					</MotionLink>

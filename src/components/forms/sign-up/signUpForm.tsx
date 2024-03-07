@@ -5,7 +5,6 @@ import FormSiteContainer from '../formSiteContainer'
 import Logo from '@/components/ui/logo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import Button from '@/components/ui/button'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
@@ -13,21 +12,8 @@ import GoogleButton from '@/components/ui/googleButton'
 import Link from 'next/link'
 import FormInput from '@/components/ui/formInput'
 import LinkButton from '@/components/ui/linkButton'
-
-const FormSchema = z.object({
-	firstName: z.string().min(1, 'First name is required!').max(100),
-	lastName: z.string().min(1, 'Last name is required!').max(100),
-	email: z.string().min(1, 'Email is required!').email('Invalid email!'),
-})
-const FormSchema2 = z
-	.object({
-		password: z.string().min(1, 'Password is required').min(8, 'Password must have more than 8 characters!'),
-		confirmPassword: z.string().min(1, 'Confirm Password is required!'),
-	})
-	.refine(data => data.password === data.confirmPassword, {
-		path: ['confirmPassword'],
-		message: 'Password do not match',
-	})
+import * as z from 'zod'
+import { FormStepOneSchema, FormStepTwoSchema } from './signUpForm.data'
 
 const SignUpForm = () => {
 	const [stepNumber, setStepNumber] = useState(1)
@@ -40,16 +26,16 @@ const SignUpForm = () => {
 		password: '',
 		confirmPassword: '',
 	})
-	const form = useForm({
-		resolver: zodResolver(FormSchema),
+	const formStepOne = useForm({
+		resolver: zodResolver(FormStepOneSchema),
 		defaultValues: {
 			firstName: formValues.firstName,
 			lastName: formValues.lastName,
 			email: formValues.email,
 		},
 	})
-	const form2 = useForm({
-		resolver: zodResolver(FormSchema2),
+	const formStepTwo = useForm({
+		resolver: zodResolver(FormStepTwoSchema),
 		defaultValues: {
 			password: formValues.password,
 			confirmPassword: formValues.confirmPassword,
@@ -61,7 +47,7 @@ const SignUpForm = () => {
 	const handleNext = () => {
 		setStepNumber(prevNumber => prevNumber + 1)
 	}
-	const onSubmit = (values: z.infer<typeof FormSchema>) => {
+	const onSubmit = (values: z.infer<typeof FormStepOneSchema>) => {
 		setFormValues(prevValues => {
 			const newValues = {
 				...prevValues,
@@ -73,7 +59,7 @@ const SignUpForm = () => {
 		})
 		handleNext()
 	}
-	const onSecondSubmit = (values: z.infer<typeof FormSchema2>) => {
+	const onSecondSubmit = (values: z.infer<typeof FormStepTwoSchema>) => {
 		setIsSubmitting(true)
 		setFormValues(prevValues => {
 			const newValues = {
@@ -223,8 +209,8 @@ const SignUpForm = () => {
 			)}
 			{stepNumber === 2 && (
 				<>
-					<FormProvider {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className={classes.form}>
+					<FormProvider {...formStepOne}>
+						<form onSubmit={formStepOne.handleSubmit(onSubmit)} className={classes.form}>
 							<div className={classes.inputContainer}>
 								<FormInput
 									autoFocus
@@ -232,21 +218,21 @@ const SignUpForm = () => {
 									id="firstName"
 									defaultValue={formValues.firstName}
 									label="First Name"
-									error={form.formState.errors.firstName?.message}
+									error={formStepOne.formState.errors.firstName?.message}
 								/>
 								<FormInput
 									type="text"
 									id="lastName"
 									defaultValue={formValues.lastName}
 									label="Last Name"
-									error={form.formState.errors.lastName?.message}
+									error={formStepOne.formState.errors.lastName?.message}
 								/>
 								<FormInput
 									type="email"
 									id="email"
 									defaultValue={formValues.email}
 									label="Email"
-									error={form.formState.errors.email?.message}
+									error={formStepOne.formState.errors.email?.message}
 								/>
 							</div>
 						</form>
@@ -262,7 +248,7 @@ const SignUpForm = () => {
 						</Button>
 						<Button
 							type="submit"
-							onClick={form.handleSubmit(onSubmit)}
+							onClick={formStepOne.handleSubmit(onSubmit)}
 							style={{
 								marginLeft: 'auto',
 							}}
@@ -274,8 +260,8 @@ const SignUpForm = () => {
 			)}
 			{stepNumber === 3 && (
 				<>
-					<FormProvider {...form2}>
-						<form onSubmit={form2.handleSubmit(onSecondSubmit)} className={classes.form}>
+					<FormProvider {...formStepTwo}>
+						<form onSubmit={formStepTwo.handleSubmit(onSecondSubmit)} className={classes.form}>
 							<div className={classes.inputContainer}>
 								<FormInput
 									autoFocus
@@ -283,14 +269,14 @@ const SignUpForm = () => {
 									id="password"
 									defaultValue={formValues.password}
 									label="Password"
-									error={form2.formState.errors.password?.message}
+									error={formStepTwo.formState.errors.password?.message}
 								/>
 								<FormInput
 									type="password"
 									id="confirmPassword"
 									defaultValue={formValues.confirmPassword}
 									label="Confirm password"
-									error={form2.formState.errors.confirmPassword?.message}
+									error={formStepTwo.formState.errors.confirmPassword?.message}
 								/>
 								{error.length > 0 && <p className={classes.errorMessage}>{error}</p>}
 							</div>
@@ -307,7 +293,7 @@ const SignUpForm = () => {
 						</Button>
 						<Button
 							type="submit"
-							onClick={form2.handleSubmit(onSecondSubmit)}
+							onClick={formStepTwo.handleSubmit(onSecondSubmit)}
 							style={{
 								marginLeft: 'auto',
 							}}

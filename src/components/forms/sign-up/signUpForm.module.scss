@@ -57,7 +57,7 @@
 	width: 100%;
 	padding: 0.75em;
 	border-radius: 5px;
-	border: 1px solid #bebebe;
+	border: 1px solid $lightBorder;
 	font-size: $paragraphSize;
 }
 .formControls {
@@ -79,13 +79,13 @@
 }
 .successMessage {
 	font-size: $paragraphSize;
-	color: #333;
+	color: $textLightColor;
 	margin-top: 1em;
 	text-align: center;
 }
 .errorMessage {
 	font-size: $paragraphSize;
-	color: red;
+	color: $error;
 	text-align: center;
 }
 .attribution {
@@ -93,7 +93,7 @@
 	margin-top: auto;
 	text-align: center;
 	width: 80%;
-	color: #333;
+	color: $textLightColor;
 	font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
 	.attributionLink {
 		font-size: $primaryDark;

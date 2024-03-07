@@ -12,22 +12,7 @@ import FormTextArea from '@/components/ui/formTextArea'
 import _ from 'lodash'
 import updateDocument from '@/util/updateDocument'
 import PhotoPicker from '@/components/ui/photoPicker'
-
-const FormSchema = z.object({
-	jobTitle: z.string(),
-	photoUrl: z.string(),
-	firstName: z.string(),
-	lastName: z.string(),
-	email: z.string(),
-	phone: z.string(),
-	country: z.string(),
-	city: z.string(),
-	summary: z.string(),
-	// employment: z.string().array(),
-	// education: z.string().array(),
-	// skills: z.array(z.string()),
-	// languages: z.array(z.string()),
-})
+import { documentFormSchema } from './documentForm.data'
 
 const DocumentForm = ({
 	userDocument,
@@ -41,7 +26,7 @@ const DocumentForm = ({
 	const [errorMsg, setErrorMsg] = useState('')
 	const router = useRouter()
 	const form = useForm({
-		resolver: zodResolver(FormSchema),
+		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
 			jobTitle: userDocument.jobTitle || '',
 			photoUrl: userDocument.photoUrl || '',
@@ -72,7 +57,7 @@ const DocumentForm = ({
 		}
 	}, [form, form.watch, handleSetDocumentData, userDocument.id])
 
-	const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+	const onSubmit = async (values: z.infer<typeof documentFormSchema>) => {
 		console.log(values)
 	}
 
@@ -107,8 +92,8 @@ const DocumentForm = ({
 		<section className={classes.formSection}>
 			<h1 className="headingH1">{userDocument.name}</h1>
 			<FormProvider {...form}>
-				<form className={classes.form}>
-					<h2 className={classes.headingH2}>Personal info</h2>
+				<form className={classes.formSection__form}>
+					<h2 className={classes.formSection__headingH2}>Personal info</h2>
 					<PhotoPicker id="photoUrl" photoUrl={form.getValues('photoUrl')} handleUpdatePhoto={handleUpdatePhoto} />
 					<FormInput type="text" id="jobTitle" label="Job Title" defaultValue={userDocument.jobTitle || undefined} />
 					<FormInput
@@ -128,20 +113,20 @@ const DocumentForm = ({
 					<FormInput type="country" id="country" label="Country" defaultValue={userDocument.country || undefined} />
 					<FormInput type="city" id="city" label="City" defaultValue={userDocument.city || undefined} />
 					<div>
-						<h2 className={classes.headingH2}>Professional Summary</h2>
-						<p className={classes.paragraphSmall}>
+						<h2 className={classes.formSection__headingH2}>Professional Summary</h2>
+						<p className={classes.formSection__paragraphSmall}>
 							Write from 2 to 4 sentences to interest recruiter. Mention your experience and biggest achievments. You
 							can also mention your skills and roles in previous work.
 						</p>
 						<FormTextArea type="text" id="summary" label="Summary" defaultValue={userDocument.summary || undefined} />
 					</div>
-					<h2 className={classes.headingH2}>Employment History</h2>
+					<h2 className={classes.formSection__headingH2}>Employment History</h2>
+					<p>+ Add Field</p>
+					<h2 className={classes.formSection__headingH2}>Education</h2>
 					<p>To be filled.</p>
-					<h2 className={classes.headingH2}>Education</h2>
+					<h2 className={classes.formSection__headingH2}>Skills</h2>
 					<p>To be filled.</p>
-					<h2 className={classes.headingH2}>Skills</h2>
-					<p>To be filled.</p>
-					<h2 className={classes.headingH2}>Languages</h2>
+					<h2 className={classes.formSection__headingH2}>Languages</h2>
 					<p>To be filled.</p>
 				</form>
 				<p>{errorMsg}</p>

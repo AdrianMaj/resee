@@ -7,22 +7,21 @@
 	display: flex;
 	align-items: center;
 	top: 0;
-	background-color: #fff;
+	background-color: $white;
 	padding: 2em;
 	z-index: 1000;
-}
-.navbarContainer {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	height: auto;
-	width: 100%;
+	&__container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: auto;
+		width: 100%;
+	}
 }
 .navbarOffset {
 	height: 76px;
 	width: 100%;
 }
-
 
 @media (min-width: 992px) {
 	.navbar {

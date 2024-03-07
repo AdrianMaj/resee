@@ -1,15 +1,15 @@
 @use '../variables' as *;
-.headingH1 {
-	font-size: $headingH1Size;
-	font-weight: 600;
-	text-align: center;
-}
-.paragraph {
-	font-size: $paragraphSize;
-	text-align: center;
-	margin-top: 0.5em;
-	color: #333;
-}
 .header {
 	margin-top: 3em;
+	&__headingH1 {
+		font-size: $headingH1Size;
+		font-weight: 600;
+		text-align: center;
+	}
+	&__paragraph {
+		font-size: $paragraphSize;
+		text-align: center;
+		margin-top: 0.5em;
+		color: $textLightColor;
+	}
 }
