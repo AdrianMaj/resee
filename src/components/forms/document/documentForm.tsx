@@ -24,7 +24,6 @@ const DocumentForm = ({
 	handleSetDocumentData: (documentData: UserDocument) => void
 }) => {
 	const [errorMsg, setErrorMsg] = useState('')
-	const router = useRouter()
 	const form = useForm({
 		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
@@ -43,7 +42,6 @@ const DocumentForm = ({
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
 			const result = await updateDocument(userDocument.id, values)
-			console.log(values)
 			handleSetDocumentData(result)
 		}, 1000)
 
@@ -56,10 +54,6 @@ const DocumentForm = ({
 			debouncedLogValues.cancel()
 		}
 	}, [form, form.watch, handleSetDocumentData, userDocument.id])
-
-	const onSubmit = async (values: z.infer<typeof documentFormSchema>) => {
-		console.log(values)
-	}
 
 	const handleUpdatePhoto = (files: FileList) => {
 		if (files && files[0] && files[0].type.startsWith('image') && files[0].size < 10485760) {
