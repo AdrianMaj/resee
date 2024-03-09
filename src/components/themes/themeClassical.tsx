@@ -6,7 +6,7 @@ import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/
 Font.register({
 	family: 'Raleway',
 	fonts: [
-		{ src: '/fonts/raleway/raleway-regular.woff' }, // font-style: normal, font-weight: normal
+		{ src: '/fonts/raleway/raleway-regular.woff' },
 		{ src: '/fonts/raleway/raleway-medium.woff', fontWeight: 'medium' },
 		{ src: '/fonts/raleway/raleway-semibold.woff', fontWeight: 'semibold' },
 		{ src: '/fonts/raleway/raleway-bold.woff', fontWeight: 'bold' },
@@ -122,8 +122,8 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocument }) => {
 				</View>
 				<View style={styles.container}>
 					<View style={styles.sectionFull}>
-						<Text style={styles.bodyText}>Summary</Text>
-						<Text>{documentData.summary}</Text>
+						<Text style={styles.sectionText}>Summary</Text>
+						<Text style={styles.bodyText}>{documentData.summary}</Text>
 					</View>
 				</View>
 				<Text style={styles.attribution}>

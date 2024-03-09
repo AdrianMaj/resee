@@ -13,6 +13,7 @@ import _ from 'lodash'
 import updateDocument from '@/util/updateDocument'
 import PhotoPicker from '@/components/ui/photoPicker'
 import { documentFormSchema } from './documentForm.data'
+import InfoInput from '@/components/ui/infoInput'
 
 const DocumentForm = ({
 	userDocument,
@@ -114,17 +115,18 @@ const DocumentForm = ({
 						</p>
 						<FormTextArea type="text" id="summary" label="Summary" defaultValue={userDocument.summary || undefined} />
 					</div>
-					<h2 className={classes.formSection__headingH2}>Employment History</h2>
-					<p>+ Add Field</p>
-					<h2 className={classes.formSection__headingH2}>Education</h2>
-					<p>To be filled.</p>
-					<h2 className={classes.formSection__headingH2}>Skills</h2>
-					<p>To be filled.</p>
-					<h2 className={classes.formSection__headingH2}>Languages</h2>
-					<p>To be filled.</p>
 				</form>
 				<p>{errorMsg}</p>
 			</FormProvider>
+			<h2 className={classes.formSection__headingH2}>Employment History</h2>
+			<p>+ Add Field</p>
+			<InfoInput />
+			<h2 className={classes.formSection__headingH2}>Education</h2>
+			<p>To be filled.</p>
+			<h2 className={classes.formSection__headingH2}>Skills</h2>
+			<p>To be filled.</p>
+			<h2 className={classes.formSection__headingH2}>Languages</h2>
+			<p>To be filled.</p>
 		</section>
 	)
 }

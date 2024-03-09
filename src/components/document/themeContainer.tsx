@@ -12,7 +12,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 	const [instance, updateInstance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
-	const [prevUploadedFile, setPrevUploadedFile] = useState<{ URL: string; publicId: string }>()
 	const [uploadedFile, setUploadedFile] = useState<{ URL: string; publicId: string }>()
 	useEffect(() => {
 		updateInstance(<ThemeClassical documentData={documentData} />)
@@ -23,7 +22,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 				return
 			}
 			const formData = new FormData()
-			const file = new File([instance.blob], `${documentData.name}.pdf`, {
+			const file = new File([instance.blob], `${documentData.name}_${documentData.id}.pdf`, {
 				type: instance.blob.type,
 			})
 			formData.append('file', file)
@@ -34,7 +33,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
 					body: formData,
 				})
 				const res = await response.json()
-				await updatePDFUrl(documentData.id, res.secure_url)
+				// await updatePDFUrl(documentData.id, uploadedFile?.URL)
 				setUploadedFile({ URL: res.secure_url, publicId: res.public_id })
 			} catch (error) {
 				console.error(error)
