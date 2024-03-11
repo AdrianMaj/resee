@@ -83,11 +83,9 @@ model UserDocument {
 
 model Employment {
     id          String    @id @default(cuid())
-    jobTitle    String
-    employer    String?
-    startDate   DateTime?
-    endDate     DateTime?
-    city        String?
+    name        String?
+    from        String?
+    to          String?
     description String?
     documentId  String
     document    UserDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)

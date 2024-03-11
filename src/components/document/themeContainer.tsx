@@ -1,13 +1,12 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ThemeClassical from '../themes/themeClassical'
 import classes from './themeContainer.module.scss'
 import { UserDocument } from '@prisma/client'
-import ReactPDF, { usePDF } from '@react-pdf/renderer'
+import { usePDF } from '@react-pdf/renderer'
 import { Document, Page } from 'react-pdf'
 import _ from 'lodash'
 import { pdfjs } from 'react-pdf'
-import updatePDFUrl from '@/util/updatePDFUrl'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {

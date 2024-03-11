@@ -1,7 +1,9 @@
+@use '../variables' as *;
 .infoForm {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	margin-top: 2em;
 	&__date {
 		display: flex;
 		flex-wrap: wrap;
@@ -11,5 +13,10 @@
 		div {
 			width: fit-content;
 		}
+	}
+	&__delete {
+		font-size: $paragraphSmallSize;
+		color: $error;
+		cursor: pointer;
 	}
 }

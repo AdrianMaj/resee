@@ -3,28 +3,33 @@ import Button from '@/components/ui/button'
 import FormInput from '@/components/ui/formInput'
 import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import classes from './documentForm.module.scss'
-import { Account, UserDocument } from '@prisma/client'
+import { Account, Employment, UserDocument } from '@prisma/client'
 import FormTextArea from '@/components/ui/formTextArea'
 import _ from 'lodash'
+import * as z from 'zod'
 import updateDocument from '@/util/updateDocument'
 import PhotoPicker from '@/components/ui/photoPicker'
 import { documentFormSchema } from './documentForm.data'
 import InfoInput from '@/components/ui/infoInput'
+import createEmployment from '@/util/employment/createEmployment'
+import { UserDocumentWithEmployment } from '@/types/documentTypes'
+import { infoInputFormSchema } from '@/components/ui/infoInput.data'
+import updateEmployment from '@/util/employment/updateEmployment'
+import removeEmployment from '@/util/employment/removeEmployment'
 
 const DocumentForm = ({
 	userDocument,
 	account,
 	handleSetDocumentData,
 }: {
-	userDocument: UserDocument
+	userDocument: UserDocumentWithEmployment
 	account: Account
 	handleSetDocumentData: (documentData: UserDocument) => void
 }) => {
 	const [errorMsg, setErrorMsg] = useState('')
+	const [employmentArray, setEmploymentArray] = useState<Employment[]>(userDocument.employment)
 	const form = useForm({
 		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
@@ -37,8 +42,42 @@ const DocumentForm = ({
 			country: userDocument.country || '',
 			city: userDocument.city || '',
 			summary: userDocument.summary || '',
+			employment: employmentArray,
 		},
 	})
+
+	const handleChangeEmployment = async (values: z.infer<typeof infoInputFormSchema>) => {
+		const employment = await updateEmployment(values)
+		console.log(employment)
+		setEmploymentArray(prevState => {
+			const index = prevState.findIndex(item => {
+				return item.id === employment.id
+			})
+			if (index) {
+				prevState[index] = employment
+			}
+			return prevState
+		})
+	}
+
+	const handleAddEmployment = async () => {
+		const employment = await createEmployment(userDocument.id)
+		setEmploymentArray(prevState => [...prevState, employment])
+	}
+	const handleRemoveEmployment = async (id: string) => {
+		setEmploymentArray(prevState => {
+			const newState = prevState.filter(item => {
+				return item.id !== id
+			})
+			return newState
+		})
+		await removeEmployment(id)
+	}
+
+	useEffect(() => {
+		form.setValue('employment', employmentArray)
+		console.log(form.getValues('employment'))
+	}, [employmentArray, form])
 
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
@@ -107,7 +146,7 @@ const DocumentForm = ({
 					<FormInput type="tel" id="phone" label="Phone number" defaultValue={userDocument.phone || undefined} />
 					<FormInput type="country" id="country" label="Country" defaultValue={userDocument.country || undefined} />
 					<FormInput type="city" id="city" label="City" defaultValue={userDocument.city || undefined} />
-					<div>
+					<div className={classes.formSection__summary}>
 						<h2 className={classes.formSection__headingH2}>Professional Summary</h2>
 						<p className={classes.formSection__paragraphSmall}>
 							Write from 2 to 4 sentences to interest recruiter. Mention your experience and biggest achievments. You
@@ -119,10 +158,20 @@ const DocumentForm = ({
 				<p>{errorMsg}</p>
 			</FormProvider>
 			<h2 className={classes.formSection__headingH2}>Employment History</h2>
-			<p>+ Add Field</p>
-			<InfoInput />
+			{employmentArray.map(employment => (
+				<InfoInput key={employment.id} defaultValues={employment} setArray={handleChangeEmployment} handleRemove={handleRemoveEmployment} />
+			))}
+			<Button
+				onClick={handleAddEmployment}
+				whileHover={{ backgroundColor: '#7527f1' }}
+				className={classes.formSection__button}>
+				+ Add Field
+			</Button>
 			<h2 className={classes.formSection__headingH2}>Education</h2>
-			<p>To be filled.</p>
+			{/* <InfoInput />
+			<Button whileHover={{ backgroundColor: '#7527f1' }} className={classes.formSection__button}>
+				+ Add Field
+			</Button> */}
 			<h2 className={classes.formSection__headingH2}>Skills</h2>
 			<p>To be filled.</p>
 			<h2 className={classes.formSection__headingH2}>Languages</h2>
