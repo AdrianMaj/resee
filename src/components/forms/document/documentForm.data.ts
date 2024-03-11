@@ -10,15 +10,17 @@ export const documentFormSchema = z.object({
 	country: z.string(),
 	city: z.string(),
 	summary: z.string(),
-	employment: z
-		.object({
-			name: z.string(),
-			description: z.string(),
-			from: z.string(),
-			to: z.string(),
+	career: z.array(
+		z.object({
+			id: z.string(),
+			title: z.string().nullable(),
+			from: z.string().nullable(),
+			to: z.string().nullable(),
+			type: z.string().nullable(),
+			description: z.string().nullable(),
+			documentId: z.string(),
+			createdAt: z.date(),
+			updatedAt: z.date(),
 		})
-		.array(),
-	// education: z.string().array(),
-	// skills: z.array(z.string()),
-	// languages: z.array(z.string()),
+	),
 })

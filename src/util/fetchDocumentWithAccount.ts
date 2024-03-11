@@ -8,7 +8,7 @@ const fetchDocumentWithAccount = async (documentId: string) => {
 		},
 		include: {
 			account: true,
-			employment: true,
+			career: true,
 		},
 	})
 

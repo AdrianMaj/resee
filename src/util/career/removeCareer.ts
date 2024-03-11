@@ -2,7 +2,7 @@
 import prisma from '@/lib/prisma'
 
 const removeEmployment = async (id: string) => {
-	await prisma.employment.delete({
+	await prisma.career.delete({
 		where: {
 			id,
 		},

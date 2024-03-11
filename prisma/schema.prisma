@@ -70,8 +70,7 @@ model UserDocument {
     skills      String[]
     languages   String[]
     pdfUrl      String?
-    employment  Employment[]
-    education   Education[]
+    career      Career[]
     Theme       Theme     @relation(fields: [themeId], references: [id], onDelete: Cascade)
     accountId   String
     account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
@@ -81,24 +80,12 @@ model UserDocument {
     @@map("documents")
 }
 
-model Employment {
+model Career {
     id          String    @id @default(cuid())
-    name        String?
+    title       String?
     from        String?
     to          String?
-    description String?
-    documentId  String
-    document    UserDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
-    createdAt   DateTime  @default(now()) @map("created_at")
-    updatedAt   DateTime  @updatedAt @map("updated_at")
-}
-model Education {
-    id          String    @id @default(cuid())
-    school    String
-    degree    String?
-    startDate   DateTime?
-    endDate     DateTime?
-    city        String?
+    type        String?
     description String?
     documentId  String
     document    UserDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)

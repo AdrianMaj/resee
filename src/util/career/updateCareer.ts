@@ -4,12 +4,12 @@ import prisma from '@/lib/prisma'
 import * as z from 'zod'
 
 const updateEmployment = async (values: z.infer<typeof infoInputFormSchema>) => {
-	const document = await prisma.employment.update({
+	const document = await prisma.career.update({
 		where: {
 			id: values.id,
 		},
 		data: {
-			name: values.name,
+			title: values.title,
 			description: values.description,
 			from: values.from,
 			to: values.to,

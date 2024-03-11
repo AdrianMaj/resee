@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import classes from './documentForm.module.scss'
-import { Account, Employment, UserDocument } from '@prisma/client'
+import { Account, Career, UserDocument } from '@prisma/client'
 import FormTextArea from '@/components/ui/formTextArea'
 import _ from 'lodash'
 import * as z from 'zod'
@@ -13,23 +13,25 @@ import updateDocument from '@/util/updateDocument'
 import PhotoPicker from '@/components/ui/photoPicker'
 import { documentFormSchema } from './documentForm.data'
 import InfoInput from '@/components/ui/infoInput'
-import createEmployment from '@/util/employment/createEmployment'
-import { UserDocumentWithEmployment } from '@/types/documentTypes'
+import { UserDocumentWithCareer } from '@/types/documentTypes'
 import { infoInputFormSchema } from '@/components/ui/infoInput.data'
-import updateEmployment from '@/util/employment/updateEmployment'
-import removeEmployment from '@/util/employment/removeEmployment'
+import createCareer from '@/util/career/createCareer'
+import updateCareer from '@/util/career/updateCareer'
+import removeCareer from '@/util/career/removeCareer'
 
 const DocumentForm = ({
 	userDocument,
 	account,
 	handleSetDocumentData,
+	handleUpdateCareers,
 }: {
-	userDocument: UserDocumentWithEmployment
+	userDocument: UserDocumentWithCareer
 	account: Account
-	handleSetDocumentData: (documentData: UserDocument) => void
+	handleSetDocumentData: (documentData: UserDocumentWithCareer) => void
+	handleUpdateCareers: (career: Career[]) => void
 }) => {
 	const [errorMsg, setErrorMsg] = useState('')
-	const [employmentArray, setEmploymentArray] = useState<Employment[]>(userDocument.employment)
+	const [careerArray, setCareerArray] = useState<Career[]>(userDocument.career)
 	const form = useForm({
 		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
@@ -42,42 +44,42 @@ const DocumentForm = ({
 			country: userDocument.country || '',
 			city: userDocument.city || '',
 			summary: userDocument.summary || '',
-			employment: employmentArray,
+			career: careerArray,
 		},
 	})
 
-	const handleChangeEmployment = async (values: z.infer<typeof infoInputFormSchema>) => {
-		const employment = await updateEmployment(values)
-		console.log(employment)
-		setEmploymentArray(prevState => {
+	const handleChangeCareer = async (values: z.infer<typeof infoInputFormSchema>) => {
+		const career = await updateCareer(values)
+		setCareerArray(prevState => {
 			const index = prevState.findIndex(item => {
-				return item.id === employment.id
+				return item.id === career.id
 			})
 			if (index) {
-				prevState[index] = employment
+				prevState[index] = career
 			}
 			return prevState
 		})
+		// form.setValue('career', careerArray)
+		// handleUpdateCareers(careerArray)
 	}
 
 	const handleAddEmployment = async () => {
-		const employment = await createEmployment(userDocument.id)
-		setEmploymentArray(prevState => [...prevState, employment])
+		const career = await createCareer(userDocument.id, 'employment')
+		setCareerArray(prevState => [...prevState, career])
 	}
-	const handleRemoveEmployment = async (id: string) => {
-		setEmploymentArray(prevState => {
+	const handleAddEducation = async () => {
+		const career = await createCareer(userDocument.id, 'education')
+		setCareerArray(prevState => [...prevState, career])
+	}
+	const handleRemoveCareer = async (id: string) => {
+		setCareerArray(prevState => {
 			const newState = prevState.filter(item => {
 				return item.id !== id
 			})
 			return newState
 		})
-		await removeEmployment(id)
+		await removeCareer(id)
 	}
-
-	useEffect(() => {
-		form.setValue('employment', employmentArray)
-		console.log(form.getValues('employment'))
-	}, [employmentArray, form])
 
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
@@ -158,9 +160,19 @@ const DocumentForm = ({
 				<p>{errorMsg}</p>
 			</FormProvider>
 			<h2 className={classes.formSection__headingH2}>Employment History</h2>
-			{employmentArray.map(employment => (
-				<InfoInput key={employment.id} defaultValues={employment} setArray={handleChangeEmployment} handleRemove={handleRemoveEmployment} />
-			))}
+			{careerArray.map(career => {
+				if (career.type !== 'employment') {
+					return
+				}
+				return (
+					<InfoInput
+						key={career.id}
+						defaultValues={career}
+						setArray={handleChangeCareer}
+						handleRemove={handleRemoveCareer}
+					/>
+				)
+			})}
 			<Button
 				onClick={handleAddEmployment}
 				whileHover={{ backgroundColor: '#7527f1' }}
@@ -168,10 +180,25 @@ const DocumentForm = ({
 				+ Add Field
 			</Button>
 			<h2 className={classes.formSection__headingH2}>Education</h2>
-			{/* <InfoInput />
-			<Button whileHover={{ backgroundColor: '#7527f1' }} className={classes.formSection__button}>
+			{careerArray.map(career => {
+				if (career.type !== 'education') {
+					return
+				}
+				return (
+					<InfoInput
+						key={career.id}
+						defaultValues={career}
+						setArray={handleChangeCareer}
+						handleRemove={handleRemoveCareer}
+					/>
+				)
+			})}
+			<Button
+				onClick={handleAddEducation}
+				whileHover={{ backgroundColor: '#7527f1' }}
+				className={classes.formSection__button}>
 				+ Add Field
-			</Button> */}
+			</Button>
 			<h2 className={classes.formSection__headingH2}>Skills</h2>
 			<p>To be filled.</p>
 			<h2 className={classes.formSection__headingH2}>Languages</h2>

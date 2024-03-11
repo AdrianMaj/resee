@@ -7,9 +7,10 @@ import { usePDF } from '@react-pdf/renderer'
 import { Document, Page } from 'react-pdf'
 import _ from 'lodash'
 import { pdfjs } from 'react-pdf'
+import { UserDocumentWithCareer } from '@/types/documentTypes'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
-const ThemeContainer = ({ documentData }: { documentData: UserDocument }) => {
+const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
 	const [instance, updateInstance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
 	const [uploadedFile, setUploadedFile] = useState<{ URL: string; publicId: string }>()
 	useEffect(() => {

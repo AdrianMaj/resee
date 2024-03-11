@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 
-export type UserDocumentWithEmployment = Prisma.UserDocumentGetPayload<{
+export type UserDocumentWithCareer = Prisma.UserDocumentGetPayload<{
 	include: {
-		employment: true
+		career: true
 	}
 }>

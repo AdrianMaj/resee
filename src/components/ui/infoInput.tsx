@@ -9,7 +9,7 @@ import _ from 'lodash'
 import { infoInputFormSchema } from './infoInput.data'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Employment } from '@prisma/client'
+import { Career } from '@prisma/client'
 
 const InfoInput = ({
 	setArray,
@@ -18,13 +18,13 @@ const InfoInput = ({
 }: {
 	setArray: (values: z.infer<typeof infoInputFormSchema>) => void
 	handleRemove: (id: string) => void
-	defaultValues: Employment
+	defaultValues: Career
 }) => {
 	const form = useForm({
 		resolver: zodResolver(infoInputFormSchema),
 		defaultValues: {
 			id: defaultValues.id,
-			name: defaultValues.name,
+			title: defaultValues.title,
 			description: defaultValues.description,
 			from: defaultValues.from,
 			to: defaultValues.to,
@@ -63,7 +63,12 @@ const InfoInput = ({
 						label="To"
 					/>
 				</div>
-				<FormInput defaultValue={defaultValues.name || undefined} type="text" id="name" label="Job Title" />
+				<FormInput
+					defaultValue={defaultValues.title || undefined}
+					type="text"
+					id="title"
+					label={defaultValues.type === 'employment' ? 'Role and company' : 'School name'}
+				/>
 				<FormTextArea defaultValue={defaultValues.description || undefined} id="description" label="Description" />
 				<motion.p
 					onClick={() => {

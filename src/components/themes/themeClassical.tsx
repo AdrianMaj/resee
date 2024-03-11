@@ -2,6 +2,7 @@
 import React from 'react'
 import { UserDocument } from '@prisma/client'
 import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/renderer'
+import { UserDocumentWithCareer } from '@/types/documentTypes'
 
 Font.register({
 	family: 'Raleway',
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 })
-const ThemeClassical = ({ documentData }: { documentData: UserDocument }) => {
+const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
 	return (
 		<Document>
 			<Page size="A4" style={styles.page}>
@@ -107,6 +108,19 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocument }) => {
 				<View style={styles.container}>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Education</Text>
+						{documentData.career.length > 0 &&
+							documentData.career.map(career => {
+								if (career.type === 'education') {
+									return (
+										<View key={career.id}>
+											<Text>{career.from}</Text>
+											<Text>{career.to}</Text>
+											<Text>{career.title}</Text>
+											<Text>{career.description}</Text>
+										</View>
+									)
+								}
+							})}
 					</View>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Employment History</Text>
