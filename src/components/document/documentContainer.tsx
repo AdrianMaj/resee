@@ -4,12 +4,13 @@ import classes from './documentContainer.module.scss'
 import ThemeContainer from '@/components/document/themeContainer'
 import DocumentForm from '@/components/forms/document/documentForm'
 import { Account, UserDocument } from '@prisma/client'
+import { UserDocumentWithEmployment } from '@/types/documentTypes'
 
 const DocumentContainer = ({
 	documentWithAccount,
 	account,
 }: {
-	documentWithAccount: UserDocument
+	documentWithAccount: UserDocumentWithEmployment
 	account: Account
 }) => {
 	const [newDocumentData, setNewDocumentData] = useState<UserDocument>()
