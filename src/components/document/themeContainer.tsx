@@ -8,6 +8,8 @@ import { Document, Page } from 'react-pdf'
 import _ from 'lodash'
 import { pdfjs } from 'react-pdf'
 import { UserDocumentWithCareer } from '@/types/documentTypes'
+import updatePDFUrl from '@/util/updatePDFUrl'
+import deletePreviousDocument from '@/util/deletePreviousDocument'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
@@ -22,9 +24,27 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 				return
 			}
 			const formData = new FormData()
-			const file = new File([instance.blob], `${documentData.name}_${documentData.id}.pdf`, {
-				type: instance.blob.type,
-			})
+			try {
+				const response = await deletePreviousDocument(
+					`reseeFiles/${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${
+						documentData.id
+					}.pdf`
+				)
+				console.log(
+					'deleted file',
+					response,
+					`${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${documentData.id}.pdf`
+				)
+			} catch (error) {
+				console.error(error)
+			}
+			const file = new File(
+				[instance.blob],
+				`${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${documentData.id}.pdf`,
+				{
+					type: instance.blob.type,
+				}
+			)
 			formData.append('file', file)
 			formData.append('upload_preset', 'reseeFiles')
 			try {
@@ -33,7 +53,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 					body: formData,
 				})
 				const res = await response.json()
-				// await updatePDFUrl(documentData.id, uploadedFile?.URL)
+				console.log('created file', res)
 				setUploadedFile({ URL: res.secure_url, publicId: res.public_id })
 			} catch (error) {
 				console.error(error)
@@ -41,6 +61,16 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 		}
 		fileUpload()
 	}, [documentData.id, instance.blob, documentData.name])
+
+	useEffect(() => {
+		const updatePDF = async () => {
+			if (!uploadedFile?.URL) {
+				return
+			}
+			await updatePDFUrl(documentData.id, uploadedFile?.URL)
+		}
+		updatePDF()
+	}, [uploadedFile?.URL, documentData.id])
 
 	return (
 		<section className={classes.container}>
