@@ -23,17 +23,11 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 			if (!instance.blob) {
 				return
 			}
-			const formData = new FormData()
 			try {
-				const response = await deletePreviousDocument(
+				await deletePreviousDocument(
 					`reseeFiles/${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${
 						documentData.id
 					}.pdf`
-				)
-				console.log(
-					'deleted file',
-					response,
-					`${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${documentData.id}.pdf`
 				)
 			} catch (error) {
 				console.error(error)
@@ -45,6 +39,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 					type: instance.blob.type,
 				}
 			)
+			const formData = new FormData()
 			formData.append('file', file)
 			formData.append('upload_preset', 'reseeFiles')
 			try {
@@ -53,7 +48,6 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 					body: formData,
 				})
 				const res = await response.json()
-				console.log('created file', res)
 				setUploadedFile({ URL: res.secure_url, publicId: res.public_id })
 			} catch (error) {
 				console.error(error)
