@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './documentContainer.module.scss'
 import ThemeContainer from '@/components/document/themeContainer'
 import DocumentForm from '@/components/forms/document/documentForm'
@@ -17,19 +17,13 @@ const DocumentContainer = ({
 	const handleSetDocumentData = (documentData: UserDocumentWithCareer) => {
 		setNewDocumentData(documentData)
 	}
-	const handleUpdateCareers = (career: Career[]) => {
-		setNewDocumentData(prevData => {
-			if (!prevData) {
-				return prevData
-			}
-			prevData.career = career
-			return prevData
-		})
-	}
+	useEffect(() => {
+		console.log(newDocumentData)
+	}, [newDocumentData])
+
 	return (
 		<main className={`${classes.mainContainer}`}>
 			<DocumentForm
-				handleUpdateCareers={handleUpdateCareers}
 				handleSetDocumentData={handleSetDocumentData}
 				userDocument={documentWithAccount}
 				account={account}

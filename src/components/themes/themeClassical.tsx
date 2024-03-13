@@ -108,6 +108,7 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 				<View style={styles.container}>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Education</Text>
+						<Text>{documentData.career.length}</Text>
 						{documentData.career.length > 0 &&
 							documentData.career.map(career => {
 								if (career.type === 'education') {
@@ -124,6 +125,19 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 					</View>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Employment History</Text>
+						{documentData.career.length > 0 &&
+							documentData.career.map(career => {
+								if (career.type === 'employment') {
+									return (
+										<View key={career.id}>
+											<Text>{career.from}</Text>
+											<Text>{career.to}</Text>
+											<Text>{career.title}</Text>
+											<Text>{career.description}</Text>
+										</View>
+									)
+								}
+							})}
 					</View>
 				</View>
 				<View style={styles.container}>

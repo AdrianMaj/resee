@@ -4,7 +4,9 @@ import classes from './editorSection.module.scss'
 import { UserDocument } from '@prisma/client'
 import createDocument from '@/util/createDocument'
 import { redirect, useRouter } from 'next/navigation'
+import { Document, Page, pdfjs } from 'react-pdf'
 import Wrapper from '../ui/wrapper'
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userId: string }) => {
 	const router = useRouter()
@@ -24,9 +26,26 @@ const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userI
 				</header>
 				<section className={classes.documentSection}>
 					{documents.map(document => (
-						<p onClick={() => handleOpenDocument(document.id)} key={document.id}>
-							{document.name}
-						</p>
+						<>
+							<Document
+								onClick={() => handleOpenDocument(document.id)}
+								key={document.id}
+								className={classes.documentContainer}
+								file={document.pdfUrl}
+								renderMode="canvas"
+								loading={<div className={classes.documentBlank} />}
+								noData={<div className={classes.documentBlank} />}>
+								<Page
+									key={1}
+									className={classes.document}
+									pageNumber={1}
+									renderAnnotationLayer={false}
+									renderTextLayer={false}
+									loading={<div className={classes.documentBlank} />}
+									noData={<div className={classes.documentBlank} />}
+								/>
+							</Document>
+						</>
 					))}
 					<p onClick={handleNewDocument}>Create new document</p>
 				</section>

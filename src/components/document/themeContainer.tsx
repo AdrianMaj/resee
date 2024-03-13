@@ -14,7 +14,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
 	const [instance, updateInstance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
-	const [uploadedFile, setUploadedFile] = useState<{ URL: string; publicId: string }>()
+	const [uploadedFile, setUploadedFile] = useState<{ URL: string; publicId: string }>({
+		URL: documentData.pdfUrl || '',
+		publicId: `reseeFiles/${documentData.name ? documentData.name.split(' ').join('_') : 'New_document'}_${
+			documentData.id
+		}.pdf`,
+	})
 	useEffect(() => {
 		updateInstance(<ThemeClassical documentData={documentData} />)
 	}, [documentData, updateInstance])
@@ -49,6 +54,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 				})
 				const res = await response.json()
 				setUploadedFile({ URL: res.secure_url, publicId: res.public_id })
+				await updatePDFUrl(documentData.id, res.secure_url)
 			} catch (error) {
 				console.error(error)
 			}
@@ -68,23 +74,27 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 
 	return (
 		<section className={classes.container}>
-			{/* <a href={uploadedFile.URL}>Test URL</a> */}
-			<Document
-				className={classes.documentContainer}
-				file={instance.blob}
-				renderMode="canvas"
-				loading={<div className={classes.documentBlank} />}
-				noData={<div className={classes.documentBlank} />}>
-				<Page
-					key={1}
+			<a href={uploadedFile?.URL}>Test URL</a>
+			<div className={classes.documentContainer}>
+				<Document
 					className={classes.document}
-					pageNumber={1}
-					renderAnnotationLayer={false}
-					renderTextLayer={false}
-					loading={<div className={classes.documentBlank} />}
-					noData={<div className={classes.documentBlank} />}
-				/>
-			</Document>
+					file={instance.blob}
+					renderMode="canvas"
+					loading={<div />}
+					noData={<div />}>
+					<Page
+						scale={96 / 72}
+						key={1}
+						className={classes.documentPage}
+						pageNumber={1}
+						renderAnnotationLayer={false}
+						renderTextLayer={false}
+						loading={<div />}
+						noData={<div />}
+					/>
+				</Document>
+				{/* add spinner */}
+			</div>
 		</section>
 	)
 }

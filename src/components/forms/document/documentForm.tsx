@@ -23,12 +23,10 @@ const DocumentForm = ({
 	userDocument,
 	account,
 	handleSetDocumentData,
-	handleUpdateCareers,
 }: {
 	userDocument: UserDocumentWithCareer
 	account: Account
 	handleSetDocumentData: (documentData: UserDocumentWithCareer) => void
-	handleUpdateCareers: (career: Career[]) => void
 }) => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const [careerArray, setCareerArray] = useState<Career[]>(userDocument.career)
@@ -54,13 +52,12 @@ const DocumentForm = ({
 			const index = prevState.findIndex(item => {
 				return item.id === career.id
 			})
+			const newArray = [...prevState]
 			if (index) {
-				prevState[index] = career
+				newArray[index] = career
 			}
-			return prevState
+			return newArray
 		})
-		// form.setValue('career', careerArray)
-		// handleUpdateCareers(careerArray)
 	}
 
 	const handleAddEmployment = async () => {
@@ -83,7 +80,7 @@ const DocumentForm = ({
 
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
-			const result = await updateDocument(userDocument.id, values)
+			const result = await updateDocument(userDocument.id, { ...values, career: careerArray })
 			handleSetDocumentData(result)
 		}, 1000)
 
@@ -95,7 +92,7 @@ const DocumentForm = ({
 			subscription.unsubscribe()
 			debouncedLogValues.cancel()
 		}
-	}, [form, form.watch, handleSetDocumentData, userDocument.id])
+	}, [form, form.watch, handleSetDocumentData, userDocument.id, careerArray])
 
 	const handleUpdatePhoto = (files: FileList) => {
 		if (files && files[0] && files[0].type.startsWith('image') && files[0].size < 10485760) {
