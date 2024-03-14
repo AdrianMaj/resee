@@ -1,11 +1,9 @@
 'use server'
 import { documentFormSchema } from '@/components/forms/document/documentForm.data'
 import prisma from '@/lib/prisma'
-import { Career } from '@prisma/client'
 import * as z from 'zod'
 
 const updateDocument = async (id: string, values: z.infer<typeof documentFormSchema>) => {
-	const careers: Career[] = []
 	const document = await prisma.userDocument.update({
 		where: {
 			id,
@@ -21,9 +19,12 @@ const updateDocument = async (id: string, values: z.infer<typeof documentFormSch
 			city: values.city,
 			summary: values.summary,
 		},
+		include: {
+			career: true,
+		},
 	})
 	values.career.forEach(async item => {
-		const career = await prisma.career.update({
+		await prisma.career.update({
 			where: {
 				id: item.id,
 			},
@@ -31,11 +32,11 @@ const updateDocument = async (id: string, values: z.infer<typeof documentFormSch
 				from: item.from,
 				to: item.to,
 				title: item.title,
+				documentId: item.documentId,
 				description: item.description,
 			},
 		})
-		careers.push(career)
 	})
-	return { ...document, career: careers }
+	return document
 }
 export default updateDocument

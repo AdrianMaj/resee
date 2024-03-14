@@ -108,7 +108,6 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 				<View style={styles.container}>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Education</Text>
-						<Text>{documentData.career.length}</Text>
 						{documentData.career.length > 0 &&
 							documentData.career.map(career => {
 								if (career.type === 'education') {

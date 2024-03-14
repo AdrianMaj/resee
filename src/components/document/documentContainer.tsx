@@ -17,9 +17,6 @@ const DocumentContainer = ({
 	const handleSetDocumentData = (documentData: UserDocumentWithCareer) => {
 		setNewDocumentData(documentData)
 	}
-	useEffect(() => {
-		console.log(newDocumentData)
-	}, [newDocumentData])
 
 	return (
 		<main className={`${classes.mainContainer}`}>
