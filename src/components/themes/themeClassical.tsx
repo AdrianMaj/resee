@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		width: '100%',
-		marginBottom: 10,
+		marginBottom: 35,
 	},
 	sectionHalf: {
-		width: '50%',
+		width: '47.5%',
 	},
 	sectionFull: {
 		width: '100%',
@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '100%',
 		minHeight: 180,
 		paddingTop: 15,
 		paddingBottom: 15,
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
 	sectionText: {
 		fontSize: 18,
 		fontWeight: 'medium',
+		marginBottom: 5,
 	},
 	attribution: {
 		fontSize: 11,
@@ -79,6 +82,31 @@ const styles = StyleSheet.create({
 	},
 	bodyText: {
 		fontSize: 12,
+	},
+	career: {
+		flexDirection: 'row',
+	},
+	careerText: {
+		width: '70%',
+	},
+	careerDate: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		height: '100%',
+		width: '17%',
+		marginRight: 10,
+	},
+	careerDateText: {
+		fontSize: 12,
+	},
+	careerDateTextLast: {
+		fontSize: 12,
+	},
+	yearLine: {
+		width: 3,
+		height: '25%',
+		marginVertical: '4px',
+		backgroundColor: '#000',
 	},
 })
 const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
@@ -112,39 +140,50 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 							documentData.career.map(career => {
 								if (career.type === 'education') {
 									return (
-										<View key={career.id}>
-											<Text>{career.from}</Text>
-											<Text>{career.to}</Text>
-											<Text>{career.title}</Text>
-											<Text>{career.description}</Text>
+										<View style={styles.career} key={career.id}>
+											<View style={styles.careerDate}>
+												<Text style={styles.careerDateText}>{career.from}</Text>
+												<View style={styles.yearLine} />
+												<Text style={styles.careerDateTextLast}>{career.to}</Text>
+											</View>
+											<View style={styles.careerText}>
+												<Text>{career.title}</Text>
+												<Text style={styles.bodyText}>{career.description}</Text>
+											</View>
 										</View>
 									)
 								}
 							})}
 					</View>
+					<View style={styles.sectionHalf}>
+						<Text style={styles.sectionText}>Skills</Text>
+					</View>
+				</View>
+				<View style={styles.container}>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Employment History</Text>
 						{documentData.career.length > 0 &&
 							documentData.career.map(career => {
 								if (career.type === 'employment') {
 									return (
-										<View key={career.id}>
-											<Text>{career.from}</Text>
-											<Text>{career.to}</Text>
-											<Text>{career.title}</Text>
-											<Text>{career.description}</Text>
+										<View style={styles.career} key={career.id}>
+											<View style={styles.careerDate}>
+												<Text style={styles.careerDateText}>{career.from}</Text>
+												<View style={styles.yearLine} />
+												<Text style={styles.careerDateTextLast}>{career.to}</Text>
+											</View>
+											<View style={styles.careerText}>
+												<Text>{career.title}</Text>
+												<Text style={styles.bodyText}>{career.description}</Text>
+											</View>
 										</View>
 									)
 								}
 							})}
 					</View>
-				</View>
-				<View style={styles.container}>
-					<View style={styles.sectionHalf}>
-						<Text style={styles.sectionText}>Skills</Text>
-					</View>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Languages</Text>
+						<Text>English B2, German A1, Polish Native</Text>
 					</View>
 				</View>
 				<View style={styles.container}>

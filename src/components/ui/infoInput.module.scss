@@ -17,6 +17,9 @@
 	}
 	&__delete {
 		font-size: $paragraphSmallSize;
+		width: fit-content;
+		padding: 0.25em;
+		margin: -0.25em;
 		color: $error;
 		cursor: pointer;
 	}

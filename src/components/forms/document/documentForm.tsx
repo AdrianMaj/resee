@@ -42,23 +42,31 @@ const DocumentForm = ({
 			country: userDocument.country || '',
 			city: userDocument.city || '',
 			summary: userDocument.summary || '',
-			career: userDocument.career,
+			career: careerArray,
 		},
 	})
 
 	const handleChangeCareer = async (values: z.infer<typeof infoInputFormSchema>) => {
 		const career = await updateCareer(values)
-		const index = careerArray.findIndex(item => {
-			return item.id === career.id
+		setCareerArray(prevState => {
+			const index = prevState.findIndex(item => {
+				return item.id === career.id
+			})
+			const newArray = [...prevState]
+			if (index) {
+				newArray[index] = career
+			}
+			return newArray
 		})
-		const newArray = [...careerArray]
-		if (index) {
-			newArray[index] = career
-		}
-		setCareerArray(newArray)
-		const result = await updateDocument(userDocument.id, { ...form.getValues(), career: newArray })
-		handleSetDocumentData(result)
 	}
+
+	useEffect(() => {
+		const test = async () => {
+			const result = await updateDocument(userDocument.id, { ...form.getValues(), career: careerArray })
+			handleSetDocumentData(result)
+		}
+		test()
+	}, [careerArray, form, handleSetDocumentData, userDocument.id])
 
 	const handleAddEmployment = async () => {
 		const career = await createCareer(userDocument.id, 'employment')

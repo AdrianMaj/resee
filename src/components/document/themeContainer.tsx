@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import ThemeClassical from '../themes/themeClassical'
 import classes from './themeContainer.module.scss'
-import { UserDocument } from '@prisma/client'
 import { usePDF } from '@react-pdf/renderer'
 import { Document, Page } from 'react-pdf'
 import _ from 'lodash'

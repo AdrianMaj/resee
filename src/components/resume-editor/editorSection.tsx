@@ -3,9 +3,10 @@ import React from 'react'
 import classes from './editorSection.module.scss'
 import { UserDocument } from '@prisma/client'
 import createDocument from '@/util/createDocument'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Document, Page, pdfjs } from 'react-pdf'
 import Wrapper from '../ui/wrapper'
+import { motion } from 'framer-motion'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userId: string }) => {
@@ -25,29 +26,59 @@ const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userI
 					<p className={classes.header__paragraph}>Select your document or create new one</p>
 				</header>
 				<section className={classes.documentSection}>
+					<motion.div className={`${classes.document} ${classes.addDocument}`} whileHover="hover" initial="initial">
+						<div className={classes.addDocument__plus}></div>
+						<motion.div
+							variants={{
+								hover: {
+									opacity: 1,
+								},
+								initial: {
+									opacity: 0,
+								},
+							}}
+							className={`${classes.document__backdrop} ${classes.addDocument__backdrop}`}></motion.div>
+					</motion.div>
 					{documents.map(document => (
-						<>
+						<motion.div
+							onClick={() => handleOpenDocument(document.id)}
+							whileHover="hover"
+							initial="initial"
+							key={document.id}
+							className={classes.document}>
 							<Document
-								onClick={() => handleOpenDocument(document.id)}
-								key={document.id}
-								className={classes.documentContainer}
+								className={classes.document__container}
 								file={document.pdfUrl}
 								renderMode="canvas"
-								loading={<div className={classes.documentBlank} />}
-								noData={<div className={classes.documentBlank} />}>
+								loading={<div className={classes.document__blank} />}
+								noData={<div className={classes.document__blank} />}>
 								<Page
 									key={1}
-									className={classes.document}
+									className={classes.document__page}
 									pageNumber={1}
 									renderAnnotationLayer={false}
 									renderTextLayer={false}
-									loading={<div className={classes.documentBlank} />}
-									noData={<div className={classes.documentBlank} />}
+									loading={<div className={classes.document__blank} />}
+									noData={<div className={classes.document__blank} />}
 								/>
 							</Document>
-						</>
+							<div className={classes.document__borderFix}></div>
+							<motion.div
+								variants={{
+									hover: {
+										opacity: 1,
+									},
+									initial: {
+										opacity: 0,
+									},
+								}}
+								className={classes.document__backdrop}>
+								<div className={classes.document__backdropContainer}>
+									<p className={classes.document__backdropText}>{document.name}</p>
+								</div>
+							</motion.div>
+						</motion.div>
 					))}
-					<p onClick={handleNewDocument}>Create new document</p>
 				</section>
 			</Wrapper>
 		</main>

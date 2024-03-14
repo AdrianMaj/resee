@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import classes from './documentContainer.module.scss'
 import ThemeContainer from '@/components/document/themeContainer'
 import DocumentForm from '@/components/forms/document/documentForm'
@@ -14,9 +14,9 @@ const DocumentContainer = ({
 	account: Account
 }) => {
 	const [newDocumentData, setNewDocumentData] = useState<UserDocumentWithCareer>()
-	const handleSetDocumentData = (documentData: UserDocumentWithCareer) => {
+	const handleSetDocumentData = useCallback((documentData: UserDocumentWithCareer) => {
 		setNewDocumentData(documentData)
-	}
+	}, [])
 
 	return (
 		<main className={`${classes.mainContainer}`}>
