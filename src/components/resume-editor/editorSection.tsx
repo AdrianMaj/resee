@@ -26,7 +26,11 @@ const EditorSection = ({ documents, userId }: { documents: UserDocument[]; userI
 					<p className={classes.header__paragraph}>Select your document or create new one</p>
 				</header>
 				<section className={classes.documentSection}>
-					<motion.div className={`${classes.document} ${classes.addDocument}`} whileHover="hover" initial="initial">
+					<motion.div
+						onClick={handleNewDocument}
+						className={`${classes.document} ${classes.addDocument}`}
+						whileHover="hover"
+						initial="initial">
 						<div className={classes.addDocument__plus}></div>
 						<motion.div
 							variants={{
