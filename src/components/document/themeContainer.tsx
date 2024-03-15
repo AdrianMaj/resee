@@ -77,22 +77,31 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 		updatePDF()
 	}, [uploadedFile?.URL, documentData.id])
 
+	useEffect(() => {
+		if (!isMobile) {
+			document.body.style.height = 'auto'
+			document.body.style.overflow = 'visible'
+		} else if (isMobile && isOpened) {
+			document.body.style.height = '100%'
+			document.body.style.overflow = 'hidden'
+		}
+	}, [isMobile, isOpened])
+
 	const handleOpenPreview = () => {
-		setIsOpened(prevState => {
-			document.body.style.height = !prevState ? '100%' : 'auto'
-			document.body.style.overflow = !prevState ? 'hidden' : 'visible'
-			return !prevState
-		})
+		setIsOpened(prevState => !prevState)
 	}
 	return (
 		<>
 			<section
 				style={{
-					display: isMobile && isOpened ? 'flex' : 'none',
+					display: (isMobile && isOpened) || !isMobile ? 'flex' : 'none',
 				}}
 				className={classes.container}>
 				<div className={classes.topBar}>
-					<LinkButton style={{ fontSize: 'clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem)' }} href={uploadedFile?.URL}>
+					<LinkButton
+						style={{ fontSize: 'clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem)' }}
+						href={uploadedFile?.URL}
+						target="blank">
 						Download
 					</LinkButton>
 				</div>
