@@ -9,6 +9,10 @@ import { pdfjs } from 'react-pdf'
 import { UserDocumentWithCareer } from '@/types/documentTypes'
 import updatePDFUrl from '@/util/updatePDFUrl'
 import deletePreviousDocument from '@/util/deletePreviousDocument'
+import Spinner from '../ui/spinner'
+import LinkButton from '../ui/linkButton'
+import { useMediaQuery } from 'react-responsive'
+import Button from '../ui/button'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
@@ -19,6 +23,8 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 			documentData.id
 		}.pdf`,
 	})
+	const [isOpened, setIsOpened] = useState(false)
+	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
 	useEffect(() => {
 		updateInstance(<ThemeClassical documentData={documentData} />)
 	}, [documentData, updateInstance])
@@ -71,30 +77,52 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 		updatePDF()
 	}, [uploadedFile?.URL, documentData.id])
 
+	const handleOpenPreview = () => {
+		setIsOpened(prevState => {
+			document.body.style.height = !prevState ? '100%' : 'auto'
+			document.body.style.overflow = !prevState ? 'hidden' : 'visible'
+			return !prevState
+		})
+	}
 	return (
-		<section className={classes.container}>
-			<a href={uploadedFile?.URL}>Test URL</a>
-			<div className={classes.documentContainer}>
-				<Document
-					className={classes.document}
-					file={instance.blob}
-					renderMode="canvas"
-					loading={<div />}
-					noData={<div />}>
-					<Page
-						scale={96 / 72}
-						key={1}
-						className={classes.documentPage}
-						pageNumber={1}
-						renderAnnotationLayer={false}
-						renderTextLayer={false}
+		<>
+			<section
+				style={{
+					display: isMobile && isOpened ? 'flex' : 'none',
+				}}
+				className={classes.container}>
+				<div className={classes.topBar}>
+					<LinkButton style={{ fontSize: 'clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem)' }} href={uploadedFile?.URL}>
+						Download
+					</LinkButton>
+				</div>
+				<div className={classes.documentContainer}>
+					<Document
+						className={classes.document}
+						file={instance.blob}
+						renderMode="canvas"
 						loading={<div />}
-						noData={<div />}
-					/>
-				</Document>
-				{/* add spinner */}
-			</div>
-		</section>
+						noData={<div />}>
+						<Page
+							scale={96 / 72}
+							key={1}
+							className={classes.documentPage}
+							pageNumber={1}
+							renderAnnotationLayer={false}
+							renderTextLayer={false}
+							loading={<div />}
+							noData={<div />}
+						/>
+					</Document>
+					{/* <Spinner /> */}
+				</div>
+			</section>
+			{isMobile && (
+				<Button onClick={handleOpenPreview} filled className={classes.floatingBtn}>
+					{isOpened ? 'Hide preview' : 'Show preview'}
+				</Button>
+			)}
+		</>
 	)
 }
 

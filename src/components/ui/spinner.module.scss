@@ -1,0 +1,17 @@
+@use '../variables' as *;
+.spinner {
+	width: 5em;
+	height: 5em;
+	border-radius: 50%;
+	border: 1rem solid $primaryLight;
+	border-top: 1rem solid $primaryDark;
+}
+.loadingContainer {
+	margin: auto;
+	display: flex;
+	align-items: center;
+	gap: 2em;
+}
+.loadingText {
+	font-size: $paragraphSmallSize;
+}

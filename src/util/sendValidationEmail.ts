@@ -1,3 +1,4 @@
+'use server'
 import { Account, ActivateToken } from '@prisma/client'
 import { sendEmail } from './sendEmail'
 
