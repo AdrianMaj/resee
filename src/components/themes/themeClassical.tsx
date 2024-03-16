@@ -39,16 +39,18 @@ const styles = StyleSheet.create({
 		objectFit: 'cover',
 		borderRadius: 5,
 	},
-	text: {
+	name: {
 		fontSize: 25,
-		marginBottom: 5,
+		marginBottom: 15,
 		fontWeight: 'bold',
 	},
 	subtext: {
 		fontSize: 15,
+		marginBottom: 10,
 	},
 	subtextWidth: {
 		fontSize: 15,
+		marginBottom: 10,
 		width: '50%',
 	},
 	column: {
@@ -118,15 +120,15 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 						<Image style={styles.image} src={documentData.photoUrl} />
 					)}
 					<View style={styles.column}>
-						<Text style={styles.text}>{documentData.firstName + ' ' + documentData.lastName || '[Your Name]'}</Text>
+						<Text style={styles.name}>{documentData.firstName + ' ' + documentData.lastName || '[Your Name]'}</Text>
 						<Text style={styles.subtext}>{documentData.jobTitle || '[Job Title]'}</Text>
 						<View style={styles.row}>
 							<Text style={styles.subtextWidth}>{documentData.phone || '[Phone number]'}</Text>
 							<Text style={styles.subtextWidth}>{documentData.email || '[Your Email]'}</Text>
 						</View>
 						<View style={styles.row}>
-							<Text style={styles.subtextWidth}>{documentData.skills || '[Your Link 1]'}</Text>
-							<Text style={styles.subtextWidth}>{documentData.languages || '[Your Link 2]'}</Text>
+							<Text style={styles.subtextWidth}>{'[Your Link 1]'}</Text>
+							<Text style={styles.subtextWidth}>{'[Your Link 2]'}</Text>
 						</View>
 						<View style={styles.row}>
 							<Text style={styles.subtext}>{documentData.city + ', ' + documentData.country || '[Your Address]'}</Text>
@@ -157,6 +159,7 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 					</View>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Skills</Text>
+						<Text>{documentData.skills.join(', ')}</Text>
 					</View>
 				</View>
 				<View style={styles.container}>
@@ -183,7 +186,7 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 					</View>
 					<View style={styles.sectionHalf}>
 						<Text style={styles.sectionText}>Languages</Text>
-						<Text>English B2, German A1, Polish Native</Text>
+						<Text>{documentData.languages.join(', ')}</Text>
 					</View>
 				</View>
 				<View style={styles.container}>

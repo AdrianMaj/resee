@@ -18,6 +18,8 @@ const updateDocument = async (id: string, values: z.infer<typeof documentFormSch
 			country: values.country,
 			city: values.city,
 			summary: values.summary,
+			skills: values.skills,
+			languages: values.languages,
 		},
 		include: {
 			career: true,

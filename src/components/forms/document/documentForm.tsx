@@ -18,6 +18,7 @@ import { infoInputFormSchema } from '@/components/ui/infoInput.data'
 import createCareer from '@/util/career/createCareer'
 import updateCareer from '@/util/career/updateCareer'
 import removeCareer from '@/util/career/removeCareer'
+import MultiSelect from '@/components/ui/multiSelect'
 
 const DocumentForm = ({
 	userDocument,
@@ -30,6 +31,8 @@ const DocumentForm = ({
 }) => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const [careerArray, setCareerArray] = useState<Career[]>(userDocument.career)
+	const [skillsArray, setSkillsArray] = useState<string[]>(userDocument.skills || [])
+	const [languagesArray, setLanguagesArray] = useState<string[]>(userDocument.languages || [])
 	const form = useForm({
 		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
@@ -43,6 +46,8 @@ const DocumentForm = ({
 			city: userDocument.city || '',
 			summary: userDocument.summary || '',
 			career: careerArray,
+			skills: skillsArray,
+			languages: languagesArray,
 		},
 	})
 
@@ -59,6 +64,37 @@ const DocumentForm = ({
 			return newArray
 		})
 	}
+	const handleAddSkill = (value: string) => {
+		setSkillsArray(prevArr => [...prevArr, value])
+	}
+	const handleRemoveSkill = (value: string) => {
+		setSkillsArray(prevArr => {
+			const newArr = prevArr.filter((skill, skillIndex) => {
+				return `${skill}_${skillIndex}` !== value
+			})
+			return newArr
+		})
+	}
+
+	useEffect(() => {
+		form.setValue('skills', skillsArray)
+	}, [skillsArray, form])
+
+	const handleAddLanguage = (value: string) => {
+		setLanguagesArray(prevArr => [...prevArr, value])
+	}
+	const handleRemoveLanguage = (value: string) => {
+		setLanguagesArray(prevArr => {
+			const newArr = prevArr.filter((language, languageIndex) => {
+				return `${language}_${languageIndex}` !== value
+			})
+			return newArr
+		})
+	}
+
+	useEffect(() => {
+		form.setValue('languages', languagesArray)
+	}, [languagesArray, form])
 
 	useEffect(() => {
 		const test = async () => {
@@ -205,9 +241,21 @@ const DocumentForm = ({
 				+ Add Field
 			</Button>
 			<h2 className={classes.formSection__headingH2}>Skills</h2>
-			<p>To be filled.</p>
+			<MultiSelect
+				setStateFn={handleAddSkill}
+				deleteElementFn={handleRemoveSkill}
+				defaultValue={skillsArray}
+				type="text"
+				label="Skills"
+			/>
 			<h2 className={classes.formSection__headingH2}>Languages</h2>
-			<p>To be filled.</p>
+			<MultiSelect
+				setStateFn={handleAddLanguage}
+				deleteElementFn={handleRemoveLanguage}
+				defaultValue={languagesArray}
+				type="text"
+				label="Languages"
+			/>
 		</section>
 	)
 }

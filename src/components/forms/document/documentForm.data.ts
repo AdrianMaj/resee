@@ -23,4 +23,6 @@ export const documentFormSchema = z.object({
 			updatedAt: z.date(),
 		})
 	),
+	skills: z.array(z.string()),
+	languages: z.array(z.string()),
 })
