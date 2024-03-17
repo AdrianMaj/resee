@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
 import { Account } from '@prisma/client'
 import Image from 'next/image'
+import { signOut } from 'next-auth/react'
 
 const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
@@ -32,7 +33,6 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 		setIsUserMenuOpened(prevState => !prevState)
 	}
 	const MotionImage = motion(Image)
-
 	return (
 		<motion.div
 			initial={isMobile ? 'hidden' : 'shown'}
@@ -40,6 +40,15 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 			exit="hidden"
 			variants={menuVariants}
 			className={classes.menu}>
+			{userAccount && isMobile && (
+				<motion.p
+					variants={elementsVariants}
+					className={classes.menu__link}
+					whileHover={{ color: '#7527f1' }}
+					onClick={() => signOut({ redirect: true, callbackUrl: '/' })}>
+					Log out
+				</motion.p>
+			)}
 			<MotionLink
 				variants={elementsVariants}
 				whileHover={{ color: '#7527f1' }}
@@ -85,11 +94,14 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 					<AnimatePresence>
 						{(isMobile || isUserMenuOpened) && (
 							<motion.div
-								initial={{ scaleY: 0, scaleX: 0 }}
+								initial={{ scaleY: !isMobile ? 0 : 1, scaleX: !isMobile ? 0 : 1 }}
 								animate={{ scaleY: 1, scaleX: 1 }}
-								exit={{ scaleY: 0, scaleX: 0 }}
+								exit={{ scaleY: !isMobile ? 0 : 1, scaleX: !isMobile ? 0 : 1 }}
 								className={classes.menu__userLinks}>
 								<MotionLink
+									initial={{
+										width: '100%',
+									}}
 									variants={elementsVariants}
 									whileHover={{ color: '#7527f1' }}
 									className={`${classes.menu__link}`}
@@ -97,12 +109,24 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 									My account
 								</MotionLink>
 								<MotionLink
+									initial={{
+										width: '100%',
+									}}
 									variants={elementsVariants}
 									whileHover={{ color: '#7527f1' }}
 									className={`${classes.menu__link}`}
 									href="/resume-editor">
 									My templates
 								</MotionLink>
+								{userAccount && !isMobile && (
+									<motion.p
+										variants={elementsVariants}
+										className={classes.menu__link}
+										whileHover={{ color: '#7527f1' }}
+										onClick={() => signOut({ redirect: true, callbackUrl: '/' })}>
+										Log out
+									</motion.p>
+								)}
 							</motion.div>
 						)}
 					</AnimatePresence>

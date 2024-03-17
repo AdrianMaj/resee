@@ -18,6 +18,7 @@
 		text-wrap: nowrap;
 		text-decoration: none;
 		color: $textColor;
+		cursor: pointer;
 	}
 	&__line {
 		display: none;
@@ -32,7 +33,8 @@
 		align-items: center;
 		gap: 2.5em;
 		width: 100%;
-		justify-content: center;
+		justify-content: flex-end;
+		flex-direction: row-reverse;
 	}
 	&__loginLink {
 		font-weight: 600;
@@ -77,6 +79,7 @@
 		align-items: center;
 		box-shadow: none;
 		&__loginContainer {
+			flex-direction: row;
 			width: auto;
 			justify-content: flex-start;
 		}
