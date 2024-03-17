@@ -10,7 +10,7 @@ const Page = async () => {
 	if (account) {
 		return (
 			<>
-				<Navbar></Navbar>
+				<Navbar userAccount={account}></Navbar>
 				<EditorSection documents={account.UserDocument} userId={account.id} />
 				<FooterSection />
 			</>
