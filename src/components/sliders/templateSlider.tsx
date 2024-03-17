@@ -9,7 +9,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 import classes from './templateSlider.module.scss'
 import Image from 'next/image'
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 import { motion } from 'framer-motion'
 
 const RESUME_TEMPLATES = [
@@ -98,9 +98,9 @@ const TemplateSlider = () => {
 					<motion.svg
 						whileHover="hover"
 						initial="initial"
-						style={{ height: 'auto', width: '100%' }}
 						width="1024"
 						height="1024"
+						className={classes.sliderSvg}
 						viewBox="0 0 1024 1024"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg">
@@ -133,7 +133,7 @@ const TemplateSlider = () => {
 					<motion.svg
 						whileHover="hover"
 						initial="initial"
-						style={{ height: 'auto', width: '100%', rotate: '180deg' }}
+						className={classes.sliderSvgRotated}
 						width="1024"
 						height="1024"
 						viewBox="0 0 1024 1024"

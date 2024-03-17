@@ -33,7 +33,6 @@ const HeroSection = () => {
 								width={0}
 								height={0}
 								sizes="100vw"
-								style={{ height: 'auto' }}
 								className={classes.hero__cupIcon}
 							/>
 							<p className={`paragraph ${classes.hero__cupParagraph}`}>

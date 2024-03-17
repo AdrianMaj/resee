@@ -10,7 +10,6 @@ const InfoSectionCard = ({ src, number, text }: { src: string; number: string; t
 				width={0}
 				height={0}
 				sizes="100vw"
-				style={{ height: 'auto' }}
 				className={classes.cardImg}
 			/>
 			<div className={classes.cardTextContainer}>
