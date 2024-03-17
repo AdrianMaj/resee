@@ -40,11 +40,12 @@
 .container {
 	display: flex;
 	flex-direction: column;
-	margin: 1.5em 0;
+	margin: 2em 0;
 }
 .errorMessage {
 	color: red;
 	font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
+	margin-bottom: 0.5em;
 }
 .label {
 	font-size: $paragraphSize;

@@ -69,7 +69,12 @@ const InfoInput = ({
 					id="title"
 					label={defaultValues.type === 'employment' ? 'Role and company' : 'School name'}
 				/>
-				<FormTextArea defaultValue={defaultValues.description || undefined} id="description" label="Description" />
+				<FormTextArea
+					minHeight="90px"
+					defaultValue={defaultValues.description || undefined}
+					id="description"
+					label="Description"
+				/>
 				<motion.p
 					onClick={() => {
 						handleRemove(defaultValues.id)

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		padding: 20,
 		fontFamily: 'Raleway',
+		flex: 1,
 	},
 	section: {
 		display: 'flex',
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
 	},
 	sectionFull: {
 		width: '100%',
+		flex: 1,
 	},
 	image: {
 		width: '25%',
@@ -69,9 +71,29 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		width: '100%',
-		minHeight: 180,
+		minHeight: '20%',
+		maxHeight: '32%',
 		paddingTop: 15,
 		paddingBottom: 15,
+	},
+	containerPreLast: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		minHeight: '20%',
+		maxHeight: '26%',
+		width: '100%',
+		paddingTop: 15,
+		paddingBottom: 15,
+	},
+	containerLast: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'flex-end',
+		width: '100%',
+		minHeight: '10%',
+		maxHeight: '15%',
+		marginTop: 'auto',
+		paddingTop: 15,
 	},
 	sectionText: {
 		fontSize: 18,
@@ -80,16 +102,20 @@ const styles = StyleSheet.create({
 	},
 	attribution: {
 		fontSize: 11,
-		marginTop: 'auto',
 	},
 	bodyText: {
 		fontSize: 12,
+		flex: 1,
+	},
+	mainText: {
+		fontSize: 16,
 	},
 	career: {
 		flexDirection: 'row',
 	},
 	careerText: {
 		width: '70%',
+		flex: 1,
 	},
 	careerDate: {
 		flexDirection: 'column',
@@ -105,10 +131,13 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 	yearLine: {
-		width: 3,
+		width: 1,
 		height: '25%',
 		marginVertical: '4px',
 		backgroundColor: '#000',
+	},
+	columnLayout: {
+		flexDirection: 'column',
 	},
 })
 const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
@@ -135,70 +164,71 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 						</View>
 					</View>
 				</View>
-				<View style={styles.container}>
-					<View style={styles.sectionHalf}>
-						<Text style={styles.sectionText}>Education</Text>
-						{documentData.career.length > 0 &&
-							documentData.career.map(career => {
-								if (career.type === 'education') {
-									return (
-										<View style={styles.career} key={career.id}>
-											<View style={styles.careerDate}>
-												<Text style={styles.careerDateText}>{career.from}</Text>
-												<View style={styles.yearLine} />
-												<Text style={styles.careerDateTextLast}>{career.to}</Text>
+				<View style={styles.columnLayout}>
+					<View style={styles.container}>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Education</Text>
+							{documentData.career.length > 0 &&
+								documentData.career.map(career => {
+									if (career.type === 'education') {
+										return (
+											<View style={styles.career} key={career.id}>
+												<View style={styles.careerDate}>
+													<Text style={styles.careerDateText}>{career.from}</Text>
+													<View style={styles.yearLine} />
+													<Text style={styles.careerDateTextLast}>{career.to}</Text>
+												</View>
+												<View style={styles.careerText}>
+													<Text style={styles.mainText}>{career.title}</Text>
+													<Text style={styles.bodyText}>{career.description}</Text>
+												</View>
 											</View>
-											<View style={styles.careerText}>
-												<Text>{career.title}</Text>
-												<Text style={styles.bodyText}>{career.description}</Text>
-											</View>
-										</View>
-									)
-								}
-							})}
+										)
+									}
+								})}
+						</View>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Skills</Text>
+							<Text style={styles.mainText}>{documentData.skills.join(', ')}</Text>
+						</View>
 					</View>
-					<View style={styles.sectionHalf}>
-						<Text style={styles.sectionText}>Skills</Text>
-						<Text>{documentData.skills.join(', ')}</Text>
+					<View style={styles.container}>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Employment History</Text>
+							{documentData.career.length > 0 &&
+								documentData.career.map(career => {
+									if (career.type === 'employment') {
+										return (
+											<View style={styles.career} key={career.id}>
+												<View style={styles.careerDate}>
+													<Text style={styles.careerDateText}>{career.from}</Text>
+													{career.from && career.to && <View style={styles.yearLine} />}
+													<Text style={styles.careerDateTextLast}>{career.to}</Text>
+												</View>
+												<View style={styles.careerText}>
+													<Text style={styles.mainText}>{career.title}</Text>
+													<Text style={styles.bodyText}>{career.description}</Text>
+												</View>
+											</View>
+										)
+									}
+								})}
+						</View>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Languages</Text>
+							<Text style={styles.mainText}>{documentData.languages.join(', ')}</Text>
+						</View>
+					</View>
+					<View style={styles.containerPreLast}>
+						<View style={styles.sectionFull}>
+							<Text style={styles.sectionText}>Summary</Text>
+							<Text style={styles.bodyText}>{documentData.summary}</Text>
+						</View>
+					</View>
+					<View style={styles.containerLast}>
+						<Text style={styles.attribution}>{documentData.attribution}</Text>
 					</View>
 				</View>
-				<View style={styles.container}>
-					<View style={styles.sectionHalf}>
-						<Text style={styles.sectionText}>Employment History</Text>
-						{documentData.career.length > 0 &&
-							documentData.career.map(career => {
-								if (career.type === 'employment') {
-									return (
-										<View style={styles.career} key={career.id}>
-											<View style={styles.careerDate}>
-												<Text style={styles.careerDateText}>{career.from}</Text>
-												<View style={styles.yearLine} />
-												<Text style={styles.careerDateTextLast}>{career.to}</Text>
-											</View>
-											<View style={styles.careerText}>
-												<Text>{career.title}</Text>
-												<Text style={styles.bodyText}>{career.description}</Text>
-											</View>
-										</View>
-									)
-								}
-							})}
-					</View>
-					<View style={styles.sectionHalf}>
-						<Text style={styles.sectionText}>Languages</Text>
-						<Text>{documentData.languages.join(', ')}</Text>
-					</View>
-				</View>
-				<View style={styles.container}>
-					<View style={styles.sectionFull}>
-						<Text style={styles.sectionText}>Summary</Text>
-						<Text style={styles.bodyText}>{documentData.summary}</Text>
-					</View>
-				</View>
-				<Text style={styles.attribution}>
-					I hereby consent to my personal data being processed by company name for the purpose of considering my
-					application for the vacancy advertised under reference number 123XX6 etc.
-				</Text>
 			</Page>
 		</Document>
 	)

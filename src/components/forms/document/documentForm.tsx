@@ -29,7 +29,6 @@ const DocumentForm = ({
 	account: Account
 	handleSetDocumentData: (documentData: UserDocumentWithCareer) => void
 }) => {
-	const [errorMsg, setErrorMsg] = useState('')
 	const [careerArray, setCareerArray] = useState<Career[]>(userDocument.career)
 	const [skillsArray, setSkillsArray] = useState<string[]>(userDocument.skills || [])
 	const [languagesArray, setLanguagesArray] = useState<string[]>(userDocument.languages || [])
@@ -48,6 +47,7 @@ const DocumentForm = ({
 			career: careerArray,
 			skills: skillsArray,
 			languages: languagesArray,
+			attribution: userDocument.attribution || '',
 		},
 	})
 
@@ -189,16 +189,31 @@ const DocumentForm = ({
 					<FormInput type="tel" id="phone" label="Phone number" defaultValue={userDocument.phone || undefined} />
 					<FormInput type="country" id="country" label="Country" defaultValue={userDocument.country || undefined} />
 					<FormInput type="city" id="city" label="City" defaultValue={userDocument.city || undefined} />
+					<div className={classes.formSection__gapProvider}>
+						<h2 className={classes.formSection__headingH2}>Attribution</h2>
+						<FormTextArea
+							minHeight="90px"
+							type="text"
+							id="attribution"
+							label="Attribution"
+							defaultValue={userDocument.attribution || undefined}
+						/>
+					</div>
 					<div className={classes.formSection__summary}>
 						<h2 className={classes.formSection__headingH2}>Professional Summary</h2>
 						<p className={classes.formSection__paragraphSmall}>
 							Write from 2 to 4 sentences to interest recruiter. Mention your experience and biggest achievments. You
 							can also mention your skills and roles in previous work.
 						</p>
-						<FormTextArea type="text" id="summary" label="Summary" defaultValue={userDocument.summary || undefined} />
+						<FormTextArea
+							minHeight="180px"
+							type="text"
+							id="summary"
+							label="Summary"
+							defaultValue={userDocument.summary || undefined}
+						/>
 					</div>
 				</form>
-				<p>{errorMsg}</p>
 			</FormProvider>
 			<h2 className={classes.formSection__headingH2}>Employment History</h2>
 			{careerArray.map(career => {

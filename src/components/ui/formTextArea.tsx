@@ -9,12 +9,14 @@ const FormTextArea = ({
 	label,
 	error,
 	defaultValue,
+	minHeight,
 	...props
 }: {
 	id: string
 	label: string
 	error?: string
 	defaultValue?: string
+	minHeight?: string
 	[x: string]: any
 }) => {
 	const { register } = useFormContext()
@@ -60,6 +62,9 @@ const FormTextArea = ({
 	return (
 		<div className={classes.inputContainer}>
 			<motion.textarea
+				style={{
+					minHeight,
+				}}
 				animate={{ border: borderState }}
 				className={classes.input}
 				id={id}

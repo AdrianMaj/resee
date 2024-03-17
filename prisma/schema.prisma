@@ -69,6 +69,7 @@ model UserDocument {
     summary     String?
     skills      String[]
     languages   String[]
+    attribution String?
     pdfUrl      String?
     career      Career[]
     Theme       Theme     @relation(fields: [themeId], references: [id], onDelete: Cascade)

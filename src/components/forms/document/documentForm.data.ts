@@ -25,4 +25,5 @@ export const documentFormSchema = z.object({
 	),
 	skills: z.array(z.string()),
 	languages: z.array(z.string()),
+	attribution: z.string(),
 })

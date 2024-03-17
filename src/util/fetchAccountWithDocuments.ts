@@ -12,11 +12,7 @@ const fetchAccountWithDocuments = async () => {
 				id: userId,
 			},
 			include: {
-				UserDocument: {
-					orderBy: {
-						updatedAt: 'desc',
-					},
-				},
+				UserDocument: true,
 			},
 		})
 		return userAccount

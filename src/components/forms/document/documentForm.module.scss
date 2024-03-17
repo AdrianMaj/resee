@@ -31,7 +31,12 @@
 		margin-bottom: 1em;
 	}
 	&__summary {
-		margin-bottom: 1em;
+		margin-bottom: 2em;
+	}
+	&__gapProvider {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
 	}
 }
 @media (min-width: 992px) {

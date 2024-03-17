@@ -84,6 +84,9 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 		} else if (isMobile && isOpened) {
 			document.body.style.height = '100%'
 			document.body.style.overflow = 'hidden'
+		} else if (isMobile && !isOpened) {
+			document.body.style.height = 'auto'
+			document.body.style.overflow = 'visible'
 		}
 	}, [isMobile, isOpened])
 
