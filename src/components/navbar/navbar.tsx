@@ -10,9 +10,8 @@ import Logo from '../ui/logo'
 import fetchAccount from '@/util/fetchAccount'
 import { Account } from '@prisma/client'
 
-const Navbar = () => {
+const Navbar = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const [userAccount, setUserAccount] = useState<Account>()
 	const [isScrollingDown, setIsScrollingDown] = useState(false)
 	const toggleMenu = () => {
 		setIsMenuOpen(prevState => !prevState)
@@ -36,16 +35,6 @@ const Navbar = () => {
 			setIsMenuOpen(false)
 		}
 	}, [isMobile])
-
-	useEffect(() => {
-		const getAccount = async () => {
-			const account = await fetchAccount()
-			if (account) {
-				setUserAccount(account)
-			}
-		}
-		getAccount()
-	}, [])
 
 	return (
 		<>

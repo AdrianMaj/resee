@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Account } from '@prisma/client'
 import Image from 'next/image'
 
-const Menu = ({ userAccount }: { userAccount: Account | undefined }) => {
+const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
 	const [isUserMenuOpened, setIsUserMenuOpened] = useState(false)
 	const menuVariants = {
