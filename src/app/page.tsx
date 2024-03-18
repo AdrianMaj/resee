@@ -4,13 +4,14 @@ import InfoSection from '@/components/homepage/infoSection'
 import TemplateSection from '@/components/homepage/templateSection'
 import Navbar from '@/components/navbar/navbar'
 import FooterSection from '@/components/ui/footerSection'
-import fetchAccount from '@/util/fetchAccount'
+import { getServerSession } from 'next-auth'
+import { SessionProvider } from 'next-auth/react'
 
 export default async function Page() {
-	const account = await fetchAccount()
+	const session = await getServerSession()
 	return (
 		<>
-			<Navbar userAccount={account} />
+				<Navbar session={session}/>
 			<main>
 				<HeroSection />
 				<InfoSection />

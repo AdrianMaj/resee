@@ -1,15 +1,18 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './menu.module.scss'
 import MotionLink from '../ui/motionLink'
 import LinkButton from '../ui/linkButton'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
-import { Account } from '@prisma/client'
 import Image from 'next/image'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { Account } from '@prisma/client'
+import fetchAccount from '@/util/fetchAccount'
 
-const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
+const Menu = () => {
+	const { data: session } = useSession()
+	const [account, setAccount] = useState<Account | undefined | null>()
 	const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
 	const [isUserMenuOpened, setIsUserMenuOpened] = useState(false)
 	const menuVariants = {
@@ -29,6 +32,18 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 		},
 	}
 
+	useEffect(() => {
+		const updateSession = async () => {
+			if (session?.user?.id) {
+				const account = await fetchAccount()
+				setAccount(account)
+			} else {
+				setAccount(null)
+			}
+		}
+		updateSession()
+	}, [session])
+
 	const toggleUserMenu = () => {
 		setIsUserMenuOpened(prevState => !prevState)
 	}
@@ -40,7 +55,7 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 			exit="hidden"
 			variants={menuVariants}
 			className={classes.menu}>
-			{userAccount && isMobile && (
+			{account && isMobile && (
 				<motion.p
 					variants={elementsVariants}
 					className={classes.menu__link}
@@ -64,7 +79,7 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 				Resume Editor
 			</MotionLink>
 			<div className={classes.menu__line}></div>
-			{userAccount ? (
+			{account ? (
 				<div className={classes.menu__detailsContainer}>
 					<motion.div className={classes.menu__photoContainer} onClick={toggleUserMenu}>
 						<Image
@@ -72,11 +87,11 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 							width={0}
 							height={0}
 							sizes="100vw"
-							src={userAccount.photo || '/user.svg'}
-							alt={userAccount.name}
+							src={account.photo || '/user.svg'}
+							alt={account.name}
 						/>
 						{isMobile ? (
-							<p className={classes.menu__userName}>{userAccount.name}</p>
+							<p className={classes.menu__userName}>{account.name}</p>
 						) : (
 							<div className={classes.menu__iconContainer}>
 								<MotionImage
@@ -86,7 +101,7 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 									height={0}
 									sizes="100vw"
 									src="/avatarArrow.svg"
-									alt={userAccount.name}
+									alt={account.name}
 								/>
 							</div>
 						)}
@@ -118,7 +133,7 @@ const Menu = ({ userAccount }: { userAccount: Account | undefined | null }) => {
 									href="/resume-editor">
 									My templates
 								</MotionLink>
-								{userAccount && !isMobile && (
+								{account && !isMobile && (
 									<motion.p
 										variants={elementsVariants}
 										className={classes.menu__link}

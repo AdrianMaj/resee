@@ -7,10 +7,10 @@ import { useMediaQuery } from 'react-responsive'
 import Menu from './menu'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import Logo from '../ui/logo'
-import fetchAccount from '@/util/fetchAccount'
-import { Account } from '@prisma/client'
+import { SessionProvider } from 'next-auth/react'
+import { Session } from 'next-auth'
 
-const Navbar = ({ userAccount }: { userAccount: Account | undefined | null }) => {
+const Navbar = ({ session }: { session: Session | null }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const [isScrollingDown, setIsScrollingDown] = useState(false)
 	const toggleMenu = () => {
@@ -54,7 +54,9 @@ const Navbar = ({ userAccount }: { userAccount: Account | undefined | null }) =>
 					<div className={classes.navbar__container}>
 						<Logo />
 						<BurgerButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-						<AnimatePresence>{isMenuOpen && <Menu userAccount={userAccount} />}</AnimatePresence>
+						<SessionProvider session={session}>
+							<AnimatePresence>{isMenuOpen && <Menu />}</AnimatePresence>
+						</SessionProvider>
 					</div>
 				</Wrapper>
 			</motion.nav>
