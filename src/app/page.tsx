@@ -5,7 +5,6 @@ import TemplateSection from '@/components/homepage/templateSection'
 import Navbar from '@/components/navbar/navbar'
 import FooterSection from '@/components/ui/footerSection'
 import { getServerSession } from 'next-auth'
-import { SessionProvider } from 'next-auth/react'
 
 export default async function Page() {
 	const session = await getServerSession()

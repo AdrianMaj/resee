@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
-import { UserDocument } from '@prisma/client'
-import { Page, Text, View, Document, StyleSheet, Image, Font } from '@react-pdf/renderer'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { Career } from '@prisma/client'
+import { Page, Text, View, Document, StyleSheet, Image, Font, Link } from '@react-pdf/renderer'
 import { UserDocumentWithCareer } from '@/types/documentTypes'
 
 Font.register({
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		backgroundColor: '#fff',
 		padding: 20,
+		height: '100%',
 		fontFamily: 'Raleway',
 		flex: 1,
 	},
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		width: '100%',
+		height: 'auto',
 		marginBottom: 35,
 	},
 	sectionHalf: {
@@ -54,6 +57,7 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		marginBottom: 10,
 		width: '50%',
+		color: '#000',
 	},
 	column: {
 		marginTop: 10,
@@ -71,16 +75,22 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		width: '100%',
-		minHeight: '20%',
-		maxHeight: '32%',
+		height: '60%',
+		paddingTop: 15,
+		paddingBottom: 15,
+	},
+	containerSmall: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '100%',
+		height: '15%',
 		paddingTop: 15,
 		paddingBottom: 15,
 	},
 	containerPreLast: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		minHeight: '20%',
-		maxHeight: '26%',
+		height: '25%',
 		width: '100%',
 		paddingTop: 15,
 		paddingBottom: 15,
@@ -90,8 +100,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'flex-end',
 		width: '100%',
-		minHeight: '10%',
-		maxHeight: '15%',
+		minHeight: '5%',
+		maxHeight: '10%',
 		marginTop: 'auto',
 		paddingTop: 15,
 	},
@@ -112,6 +122,7 @@ const styles = StyleSheet.create({
 	},
 	career: {
 		flexDirection: 'row',
+		height: 'auto',
 	},
 	careerText: {
 		width: '70%',
@@ -132,7 +143,7 @@ const styles = StyleSheet.create({
 	},
 	yearLine: {
 		width: 1,
-		height: '25%',
+		height: 16,
 		marginVertical: '4px',
 		backgroundColor: '#000',
 	},
@@ -141,6 +152,16 @@ const styles = StyleSheet.create({
 	},
 })
 const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
+	const [education, setEducation] = useState<Career[]>()
+	const [employment, setEmployment] = useState<Career[]>()
+
+	useEffect(() => {
+		const educationArr = documentData.career.filter(career => career.type === 'education')
+		const employmentArr = documentData.career.filter(career => career.type === 'employment')
+		setEducation(educationArr)
+		setEmployment(employmentArr)
+	}, [documentData])
+
 	return (
 		<Document>
 			<Page size="A4" style={styles.page}>
@@ -149,15 +170,23 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 						<Image style={styles.image} src={documentData.photoUrl} />
 					)}
 					<View style={styles.column}>
-						<Text style={styles.name}>{documentData.firstName + ' ' + documentData.lastName || '[Your Name]'}</Text>
-						<Text style={styles.subtext}>{documentData.jobTitle || '[Job Title]'}</Text>
+						<Text style={styles.name}>{documentData.firstName + ' ' + documentData.lastName}</Text>
+						<Text style={styles.subtext}>{documentData.jobTitle}</Text>
 						<View style={styles.row}>
-							<Text style={styles.subtextWidth}>{documentData.phone || '[Phone number]'}</Text>
-							<Text style={styles.subtextWidth}>{documentData.email || '[Your Email]'}</Text>
+							<Link style={styles.subtextWidth} href={`tel:${documentData.phone}`}>
+								{documentData.phone}
+							</Link>
+							<Link style={styles.subtextWidth} href={`mailto:${documentData.email}`}>
+								{documentData.email}
+							</Link>
 						</View>
 						<View style={styles.row}>
-							<Text style={styles.subtextWidth}>{'[Your Link 1]'}</Text>
-							<Text style={styles.subtextWidth}>{'[Your Link 2]'}</Text>
+							<Link style={styles.subtextWidth} href={`${documentData.link1}`}>
+								{documentData.link1?.replace(/^\/\/|^.*?:(\/\/)?/, '')}
+							</Link>
+							<Link style={styles.subtextWidth} href={`${documentData.link2}`}>
+								{documentData.link2?.replace(/^\/\/|^.*?:(\/\/)?/, '')}
+							</Link>
 						</View>
 						<View style={styles.row}>
 							<Text style={styles.subtext}>{documentData.city + ', ' + documentData.country || '[Your Address]'}</Text>
@@ -165,58 +194,52 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 					</View>
 				</View>
 				<View style={styles.columnLayout}>
-					<View style={styles.container}>
-						<View style={styles.sectionHalf}>
-							<Text style={styles.sectionText}>Education</Text>
-							{documentData.career.length > 0 &&
-								documentData.career.map(career => {
-									if (career.type === 'education') {
-										return (
-											<View style={styles.career} key={career.id}>
-												<View style={styles.careerDate}>
-													<Text style={styles.careerDateText}>{career.from}</Text>
-													<View style={styles.yearLine} />
-													<Text style={styles.careerDateTextLast}>{career.to}</Text>
-												</View>
-												<View style={styles.careerText}>
-													<Text style={styles.mainText}>{career.title}</Text>
-													<Text style={styles.bodyText}>{career.description}</Text>
-												</View>
-											</View>
-										)
-									}
-								})}
-						</View>
+					<View style={styles.containerSmall}>
 						<View style={styles.sectionHalf}>
 							<Text style={styles.sectionText}>Skills</Text>
 							<Text style={styles.mainText}>{documentData.skills.join(', ')}</Text>
 						</View>
-					</View>
-					<View style={styles.container}>
-						<View style={styles.sectionHalf}>
-							<Text style={styles.sectionText}>Employment History</Text>
-							{documentData.career.length > 0 &&
-								documentData.career.map(career => {
-									if (career.type === 'employment') {
-										return (
-											<View style={styles.career} key={career.id}>
-												<View style={styles.careerDate}>
-													<Text style={styles.careerDateText}>{career.from}</Text>
-													{career.from && career.to && <View style={styles.yearLine} />}
-													<Text style={styles.careerDateTextLast}>{career.to}</Text>
-												</View>
-												<View style={styles.careerText}>
-													<Text style={styles.mainText}>{career.title}</Text>
-													<Text style={styles.bodyText}>{career.description}</Text>
-												</View>
-											</View>
-										)
-									}
-								})}
-						</View>
 						<View style={styles.sectionHalf}>
 							<Text style={styles.sectionText}>Languages</Text>
 							<Text style={styles.mainText}>{documentData.languages.join(', ')}</Text>
+						</View>
+					</View>
+					<View style={styles.container}>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Education</Text>
+							{education?.map(career => {
+								return (
+									<View style={styles.career} key={career.id}>
+										<View style={styles.careerDate}>
+											<Text style={styles.careerDateText}>{career.from}</Text>
+											<View style={styles.yearLine} />
+											<Text style={styles.careerDateTextLast}>{career.to}</Text>
+										</View>
+										<View style={styles.careerText}>
+											<Text style={styles.mainText}>{career.title}</Text>
+											<Text style={styles.bodyText}>{career.description}</Text>
+										</View>
+									</View>
+								)
+							})}
+						</View>
+						<View style={styles.sectionHalf}>
+							<Text style={styles.sectionText}>Employment History</Text>
+							{employment?.map(career => {
+								return (
+									<View style={styles.career} key={career.id}>
+										<View style={styles.careerDate}>
+											<Text style={styles.careerDateText}>{career.from}</Text>
+											<View style={styles.yearLine} />
+											<Text style={styles.careerDateTextLast}>{career.to}</Text>
+										</View>
+										<View style={styles.careerText}>
+											<Text style={styles.mainText}>{career.title}</Text>
+											<Text style={styles.bodyText}>{career.description}</Text>
+										</View>
+									</View>
+								)
+							})}
 						</View>
 					</View>
 					<View style={styles.containerPreLast}>
@@ -225,9 +248,9 @@ const ThemeClassical = ({ documentData }: { documentData: UserDocumentWithCareer
 							<Text style={styles.bodyText}>{documentData.summary}</Text>
 						</View>
 					</View>
-					<View style={styles.containerLast}>
-						<Text style={styles.attribution}>{documentData.attribution}</Text>
-					</View>
+				</View>
+				<View style={styles.containerLast}>
+					<Text style={styles.attribution}>{documentData.attribution}</Text>
 				</View>
 			</Page>
 		</Document>

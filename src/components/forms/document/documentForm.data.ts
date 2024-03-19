@@ -10,6 +10,8 @@ export const documentFormSchema = z.object({
 	country: z.string(),
 	city: z.string(),
 	summary: z.string(),
+	link1: z.string(),
+	link2: z.string(),
 	career: z.array(
 		z.object({
 			id: z.string(),

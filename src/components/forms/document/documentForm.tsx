@@ -43,6 +43,8 @@ const DocumentForm = ({
 			phone: userDocument.phone || '',
 			country: userDocument.country || '',
 			city: userDocument.city || '',
+			link1: userDocument.link1 || '',
+			link2: userDocument.link2 || '',
 			summary: userDocument.summary || '',
 			career: careerArray,
 			skills: skillsArray,
@@ -189,6 +191,8 @@ const DocumentForm = ({
 					<FormInput type="tel" id="phone" label="Phone number" defaultValue={userDocument.phone || undefined} />
 					<FormInput type="country" id="country" label="Country" defaultValue={userDocument.country || undefined} />
 					<FormInput type="city" id="city" label="City" defaultValue={userDocument.city || undefined} />
+					<FormInput type="text" id="link1" label="Link 1" defaultValue={userDocument.link1 || undefined} />
+					<FormInput type="text" id="link2" label="Link 2" defaultValue={userDocument.link2 || undefined} />
 					<div className={classes.formSection__gapProvider}>
 						<h2 className={classes.formSection__headingH2}>Attribution</h2>
 						<FormTextArea

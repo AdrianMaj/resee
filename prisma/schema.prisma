@@ -67,6 +67,8 @@ model UserDocument {
     country     String?
     city        String?
     summary     String?
+    link1       String?
+    link2       String?
     skills      String[]
     languages   String[]
     attribution String?
