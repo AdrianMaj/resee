@@ -24,9 +24,11 @@ const DocumentForm = ({
 	userDocument,
 	account,
 	handleSetDocumentData,
+	setIsLoading,
 }: {
 	userDocument: UserDocumentWithCareer
 	account: Account
+	setIsLoading: (value: boolean) => void
 	handleSetDocumentData: (documentData: UserDocumentWithCareer) => void
 }) => {
 	const [careerArray, setCareerArray] = useState<Career[]>(userDocument.career)
@@ -54,6 +56,7 @@ const DocumentForm = ({
 	})
 
 	const handleChangeCareer = async (values: z.infer<typeof infoInputFormSchema>) => {
+		setIsLoading(true)
 		const career = await updateCareer(values)
 		setCareerArray(prevState => {
 			const index = prevState.findIndex(item => {
@@ -65,7 +68,19 @@ const DocumentForm = ({
 			}
 			return newArray
 		})
+		setIsLoading(false)
 	}
+
+	useEffect(() => {
+		setIsLoading(true)
+		const updateCareer = async () => {
+			const result = await updateDocument(userDocument.id, { ...form.getValues(), career: careerArray })
+			handleSetDocumentData(result)
+		}
+		updateCareer()
+		setIsLoading(false)
+	}, [careerArray, form, handleSetDocumentData, userDocument.id, setIsLoading])
+
 	const handleAddSkill = (value: string) => {
 		setSkillsArray(prevArr => [...prevArr, value])
 	}
@@ -98,14 +113,6 @@ const DocumentForm = ({
 		form.setValue('languages', languagesArray)
 	}, [languagesArray, form])
 
-	useEffect(() => {
-		const test = async () => {
-			const result = await updateDocument(userDocument.id, { ...form.getValues(), career: careerArray })
-			handleSetDocumentData(result)
-		}
-		test()
-	}, [careerArray, form, handleSetDocumentData, userDocument.id])
-
 	const handleAddEmployment = async () => {
 		const career = await createCareer(userDocument.id, 'employment')
 		setCareerArray(prevState => [...prevState, career])
@@ -126,8 +133,12 @@ const DocumentForm = ({
 
 	useEffect(() => {
 		const debouncedLogValues = _.debounce(async values => {
+			setIsLoading(true)
 			const result = await updateDocument(userDocument.id, { ...values, career: careerArray })
 			handleSetDocumentData(result)
+			setTimeout(() => {
+				setIsLoading(false)
+			}, 3000)
 		}, 1000)
 
 		const subscription = form.watch(values => {
@@ -138,7 +149,7 @@ const DocumentForm = ({
 			subscription.unsubscribe()
 			debouncedLogValues.cancel()
 		}
-	}, [form, form.watch, handleSetDocumentData, userDocument.id, careerArray])
+	}, [form, form.watch, handleSetDocumentData, userDocument.id, careerArray, setIsLoading])
 
 	const handleUpdatePhoto = (files: FileList) => {
 		if (files && files[0] && files[0].type.startsWith('image') && files[0].size < 10485760) {

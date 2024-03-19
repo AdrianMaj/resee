@@ -15,7 +15,13 @@ import { useMediaQuery } from 'react-responsive'
 import Button from '../ui/button'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
-const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer }) => {
+const ThemeContainer = ({
+	documentData,
+	loadingValue,
+}: {
+	documentData: UserDocumentWithCareer
+	loadingValue: boolean
+}) => {
 	const [instance, updateInstance] = usePDF({ document: <ThemeClassical documentData={documentData} /> })
 	const [uploadedFile, setUploadedFile] = useState<{ URL: string; publicId: string }>({
 		URL: documentData.pdfUrl || '',
@@ -101,6 +107,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 				}}
 				className={classes.container}>
 				<div className={classes.topBar}>
+					<p>{loadingValue ? 'Loading...' : 'Test'}</p>
 					<LinkButton
 						style={{ fontSize: 'clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem)' }}
 						href={uploadedFile?.URL}
@@ -109,6 +116,7 @@ const ThemeContainer = ({ documentData }: { documentData: UserDocumentWithCareer
 					</LinkButton>
 				</div>
 				<div className={classes.documentContainer}>
+					{loadingValue && <Spinner className={classes.fullSpinner} />}
 					<Document
 						className={classes.document}
 						file={instance.blob}

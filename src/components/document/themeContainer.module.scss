@@ -74,6 +74,20 @@
 	font-size: $paragraphSmallSize;
 	padding: 0.6em 0.9em;
 }
+.fullSpinner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 0;
+	height: 100%;
+	aspect-ratio: 1 / 1.414;
+	background-color: #fff;
+	border-radius: 5px;
+	z-index: 1000;
+}
 @media (min-width: 992px) {
 	.container {
 		width: 50%;

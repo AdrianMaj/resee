@@ -13,19 +13,24 @@ const DocumentContainer = ({
 	documentWithAccount: UserDocumentWithCareer
 	account: Account
 }) => {
+	const [loadingValue, setLoadingValue] = useState(false)
 	const [newDocumentData, setNewDocumentData] = useState<UserDocumentWithCareer>()
 	const handleSetDocumentData = useCallback((documentData: UserDocumentWithCareer) => {
 		setNewDocumentData(documentData)
+	}, [])
+	const setIsLoading = useCallback((value: boolean) => {
+		setLoadingValue(value)
 	}, [])
 
 	return (
 		<main className={`${classes.mainContainer}`}>
 			<DocumentForm
+				setIsLoading={setIsLoading}
 				handleSetDocumentData={handleSetDocumentData}
 				userDocument={documentWithAccount}
 				account={account}
 			/>
-			<ThemeContainer documentData={newDocumentData || documentWithAccount} />
+			<ThemeContainer loadingValue={loadingValue} documentData={newDocumentData || documentWithAccount} />
 		</main>
 	)
 }
