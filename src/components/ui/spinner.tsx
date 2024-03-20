@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import classes from './spinner.module.scss'
 
-const Spinner = ({ text, className }: { text?: string; className: string }) => {
+const Spinner = ({ text, className }: { text?: string; className?: string }) => {
 	return (
 		<div className={`${classes.loadingContainer} ${className}`}>
 			{text && <p className={classes.loadingText}>{text}</p>}
