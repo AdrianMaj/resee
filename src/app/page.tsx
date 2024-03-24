@@ -6,11 +6,11 @@ import Navbar from '@/components/navbar/navbar'
 import FooterSection from '@/components/ui/footerSection'
 import { getServerSession } from 'next-auth'
 
-export default async function Page() {
+const Page = async () => {
 	const session = await getServerSession()
 	return (
 		<>
-				<Navbar session={session}/>
+			<Navbar session={session} />
 			<main>
 				<HeroSection />
 				<InfoSection />
@@ -21,3 +21,4 @@ export default async function Page() {
 		</>
 	)
 }
+export default Page

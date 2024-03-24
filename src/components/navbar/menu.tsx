@@ -95,6 +95,7 @@ const Menu = () => {
 						) : (
 							<div className={classes.menu__iconContainer}>
 								<MotionImage
+									initial={{ rotate: 0 }}
 									animate={{ rotate: !isUserMenuOpened ? [180, 0] : [0, 180] }}
 									className={classes.menu__avatarArrow}
 									width={0}
