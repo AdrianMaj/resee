@@ -1,0 +1,16 @@
+@use '../variables' as *;
+.formSection {
+	height: calc(100dvh - 76px);
+	margin-bottom: 0;
+	padding-top: 5em;
+	&__headingH1 {
+		font-size: $headingH1Size;
+		font-weight: 600;
+		text-align: center;
+	}
+}
+@media (min-width: 992px) {
+	.formSection {
+		height: calc(100dvh - 100px);
+	}
+}

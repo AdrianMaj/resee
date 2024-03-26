@@ -1,0 +1,14 @@
+@use '../../variables' as *;
+.form {
+	display: flex;
+	flex-direction: column;
+	max-width: 800px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 2.5em;
+	gap: 2em;
+	background-color: #fff;
+	border: 2px solid $primary;
+	border-radius: 5px;
+	margin-top: 3em;
+}

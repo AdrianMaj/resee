@@ -121,7 +121,7 @@ const Menu = () => {
 									variants={elementsVariants}
 									whileHover={{ color: '#7527f1' }}
 									className={`${classes.menu__link}`}
-									href="/resume-editor">
+									href="/account">
 									My account
 								</MotionLink>
 								<MotionLink
