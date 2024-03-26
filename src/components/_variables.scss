@@ -9,6 +9,7 @@ $textColor: #000;
 $backdrop: #000000c0;
 $backdropDark: #00000080;
 $textLightColor: #333;
+$smallText: clamp(1.4rem, 1.2694rem + 0.6531vw, 1.8rem);
 $paragraphSmallSize: clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem);
 $paragraphSize: clamp(1.8rem, 1.6694rem + 0.6531vw, 2.2rem);
 $paragraphBigSize: clamp(2rem, 1.8694rem + 0.6531vw, 2.4rem);

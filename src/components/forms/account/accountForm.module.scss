@@ -11,4 +11,8 @@
 	border: 2px solid $primary;
 	border-radius: 5px;
 	margin-top: 3em;
+	&__passwordLink {
+		font-size: $smallText;
+		font-size: $textLightColor;
+	}
 }
