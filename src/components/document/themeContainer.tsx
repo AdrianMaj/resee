@@ -107,7 +107,7 @@ const ThemeContainer = ({
 				}}
 				className={classes.container}>
 				<div className={classes.topBar}>
-					<p>{loadingValue ? 'Loading...' : 'Test'}</p>
+					{loadingValue ? <Spinner className={classes.topBar__spinner} text="Loading..." /> : ''}
 					<LinkButton
 						style={{ fontSize: 'clamp(1.6rem, 1.4092rem + 0.9538vw, 2rem)' }}
 						href={uploadedFile?.URL}

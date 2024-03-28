@@ -1,6 +1,7 @@
 import * as z from 'zod'
 
 export const documentFormSchema = z.object({
+	name: z.string(),
 	jobTitle: z.string(),
 	photoUrl: z.string(),
 	firstName: z.string(),

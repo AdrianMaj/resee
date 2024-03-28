@@ -38,6 +38,13 @@
 		flex-direction: column;
 		gap: 2em;
 	}
+	&__documentName {
+		margin: 0 auto;
+		border: none;
+		background: none;
+		text-align: center;
+		width: 100%;
+	}
 }
 @media (min-width: 992px) {
 	.formSection {

@@ -9,6 +9,7 @@ const updateDocument = async (id: string, values: z.infer<typeof documentFormSch
 			id,
 		},
 		data: {
+			name: values.name,
 			jobTitle: values.jobTitle,
 			photoUrl: values.photoUrl,
 			firstName: values.firstName,

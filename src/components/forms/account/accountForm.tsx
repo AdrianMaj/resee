@@ -7,6 +7,7 @@ import FormInput from '@/components/ui/formInput'
 import classes from './accountForm.module.scss'
 import Link from 'next/link'
 import { Account } from '@prisma/client'
+import MotionLink from '@/components/ui/motionLink'
 
 const AccountForm = ({ account }: { account: Account | null | undefined }) => {
 	const form = useForm({
@@ -22,12 +23,19 @@ const AccountForm = ({ account }: { account: Account | null | undefined }) => {
 				<FormInput type="text" id="fullName" label="Full name" defaultValue={account?.name} />
 				<FormInput type="email" id="email" label="Email" defaultValue={account?.email} />
 				<div>
-					<FormInput type="password" disabled id="password" label="Password" defaultValue="xxxxxxxx" />
-					<Link className={classes.form__passwordLink} href="/change-password">
+					<FormInput type="password" disabled id="password" label="Password" defaultValue="xxxxxxxxxx" />
+					<MotionLink
+						whileHover={{
+							color: '#000',
+						}}
+						className={classes.form__passwordLink}
+						href="/change-password">
 						Change password
-					</Link>
+					</MotionLink>
 				</div>
-				<Link href="/delete-account">Delete my account</Link>
+				<MotionLink className={classes.form__deleteAccount} href="/delete-account">
+					Delete my account
+				</MotionLink>
 			</form>
 		</FormProvider>
 	)

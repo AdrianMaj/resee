@@ -66,6 +66,9 @@
 	padding: 1em;
 	margin-bottom: 1.5em;
 	background-color: $white;
+	&__spinner {
+		margin-right: auto;
+	}
 }
 .floatingBtn {
 	position: fixed;

@@ -19,6 +19,7 @@ import createCareer from '@/util/career/createCareer'
 import updateCareer from '@/util/career/updateCareer'
 import removeCareer from '@/util/career/removeCareer'
 import MultiSelect from '@/components/ui/multiSelect'
+import LinkButton from '@/components/ui/linkButton'
 
 const DocumentForm = ({
 	userDocument,
@@ -37,6 +38,7 @@ const DocumentForm = ({
 	const form = useForm({
 		resolver: zodResolver(documentFormSchema),
 		defaultValues: {
+			name: userDocument.name || '',
 			jobTitle: userDocument.jobTitle || '',
 			photoUrl: userDocument.photoUrl || '',
 			firstName: userDocument.firstName || account.name.split(' ')[0],
@@ -180,9 +182,14 @@ const DocumentForm = ({
 
 	return (
 		<section className={classes.formSection}>
-			<h1 className="headingH1">{userDocument.name}</h1>
 			<FormProvider {...form}>
 				<form className={classes.formSection__form}>
+					<input
+						id="name"
+						defaultValue={userDocument.name || ''}
+						{...form.register('name')}
+						className={`${classes.formSection__documentName} headingH1`}
+					/>
 					<h2 className={classes.formSection__headingH2}>Personal info</h2>
 					<PhotoPicker id="photoUrl" photoUrl={form.getValues('photoUrl')} handleUpdatePhoto={handleUpdatePhoto} />
 					<FormInput type="text" id="jobTitle" label="Job Title" defaultValue={userDocument.jobTitle || undefined} />

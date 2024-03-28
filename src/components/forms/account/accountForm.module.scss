@@ -5,14 +5,23 @@
 	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;
-	padding: 2.5em;
+	padding: 3em 2em;
 	gap: 2em;
 	background-color: #fff;
 	border: 2px solid $primary;
 	border-radius: 5px;
 	margin-top: 3em;
 	&__passwordLink {
+		margin-top: -1em;
+		padding-top: -1em;
 		font-size: $smallText;
-		font-size: $textLightColor;
+		color: $textLightColor;
+	}
+	&__deleteAccount {
+		font-size: $smallText;
+		color: #ff2020;
+		text-decoration: none;
+		width: 100%;
+		text-align: right;
 	}
 }
